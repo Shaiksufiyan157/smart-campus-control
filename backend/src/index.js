@@ -87,7 +87,7 @@ res.send(newUser);
 app.use('/', authRouter)
 app.use('/', navRouter)
 app.get('/', (req, res) => {
-    res.render('./layout/boilerplate.ejs')
+    res.render('home.ejs')
 })
 
 
