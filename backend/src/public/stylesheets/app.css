@@ -1,0 +1,8 @@
+.home{
+display: flex;
+align-items: center;
+width: 100vw;
+height: 100vh;
+font-size: 50px;
+justify-content: center;
+}

@@ -1,0 +1,49 @@
+# ===================
+# 📁 FRONTEND IGNORE
+# ===================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.local
+
+# Frontend Logs
+frontend/logs
+frontend/*.log
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+# Frontend Editor/OS Junk
+frontend/.vscode/
+!frontend/.vscode/extensions.json
+frontend/.idea/
+frontend/.DS_Store
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/*.sln
+frontend/*.sw?
+
+# ===================
+# 📁 BACKEND IGNORE
+# ===================
+backend/node_modules/
+backend/.env
+
+# Backend Logs
+backend/logs
+backend/*.log
+backend/npm-debug.log*
+
+# ===================
+# ⚙️ GLOBAL IGNORE
+# ===================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.env
+*.log
