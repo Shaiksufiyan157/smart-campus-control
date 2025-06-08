@@ -26,13 +26,9 @@ const login = async (req, res) => {
   //   httpOnly: true,
   //   maxAge: 24 * 60 * 60 * 1000 // 1 day
   // });
+res.redirect('/home')
+};
 
-  res.send(`Signed in! Welcome back, ${username}`);
-};
-const logout = (req, res) => {
-  res.clearCookie('token'); // clears cookie named 'token'
-  res.send('Logged out successfully');
-};
 
 
 
@@ -52,6 +48,14 @@ const registerUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+const logout = (req, res,next) => {
+  // res.clearCookie('token'); // clears cookie named 'token'-----> this method is for jwt
+  req.logout(function (err){
+if (err) return next(err)
+res.send("loggedout successfully")
+})
+  
+};
 
 
 

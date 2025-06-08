@@ -1,9 +1,4 @@
-import jwt from 'jsonwebtoken';
-// import cookieParser from 'cookie-parser'
-// app.use(cookieParser());
-
-
-function authenticateToken(req, res, next) {
+const authenticateToken=(req, res, next) =>{
   const token = req.cookies.token;
   if (!token) return res.status(401).send('Access Denied: No Token');
   try {
@@ -14,4 +9,11 @@ function authenticateToken(req, res, next) {
   }
 }
 
-export default authenticateToken;
+export const isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login');
+    }
+    next();
+}
+
+// export default {isLoggedIn};

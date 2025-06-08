@@ -34,6 +34,6 @@ router.route('/login')
     .post(passport.authenticate('local', { failureRedirect: '/login' }), authController.login)
 
 router.route('/logout')
-    .post(authController.logout)
+    .get(authController.logout)
 
 export default router;

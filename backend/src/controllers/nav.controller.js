@@ -1,4 +1,3 @@
-
 const renderHome=(req,res)=>{
 res.render('home.ejs')
 }
@@ -8,7 +7,8 @@ res.render("nav/academic.ejs")
 }
 
 const renderResult=(req,res)=>{
-res.render("nav/result.ejs")
+// res.render("nav/result.ejs")
+res.send("result")
 }
 
  const renderAbout=(req,res)=>{

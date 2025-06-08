@@ -1,6 +1,7 @@
 import navController from "../controllers/nav.controller.js"
 import express from "express"
-import authenticateToken from "../middleware.js"
+import { isLoggedIn } from "../middleware.js"
+import passport from "passport"
 
 const router=express.Router()
 
@@ -12,9 +13,9 @@ router.route('/academic')
     .get(navController.renderAcademic)
 
 router.route('/result')
-    .get(authenticateToken, navController.renderResult)
+    .get(isLoggedIn,navController.renderResult)
 
 router.route('/about')
-    .get(navController.renderAbout)
+    .get(isLoggedIn,navController.renderAbout)
 
 export default router;
