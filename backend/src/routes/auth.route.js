@@ -27,7 +27,7 @@ const router = express.Router()
 
 router.route('/signup')
     .get(authController.rendersignup)
-    .post(passport.authenticate('local',{failureRedirect:'/signup'}),authController.registerUser)
+    .post(authController.registerUser)
 
 router.route('/login')
     .get(authController.renderlogin)
