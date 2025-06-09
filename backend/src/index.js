@@ -1,6 +1,6 @@
 import express from "express"
 import authRouter from './routes/auth.route.js'
-import navRouter from './routes/nav.route.js'
+import StudentRouter from './routes/student.route.js'
 import dotenv from 'dotenv'
 import { connectDB } from "./lib/db.js"
 import ejs from "ejs"
@@ -14,6 +14,7 @@ import LocalStrategy from "passport-local"
 import { fileURLToPath } from 'url'; // this is for --------->"type" : "module only"
 import { dirname } from "path" // this is for --------->"type" : "module only"
 import cookieParser from 'cookie-parser'
+import Student from "./models/student.model.js"
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -85,7 +86,7 @@ const newUser= await User.register(user,"12345")
 res.send(newUser);
 })
 app.use('/', authRouter)
-app.use('/', navRouter)
+app.use('/', StudentRouter)
 app.get('/', (req, res) => {
     res.render('home.ejs')
 })

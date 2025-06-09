@@ -1,0 +1,4 @@
+>passport does require any schema to register and login
+>in passport login information is stored in the browser to avoid rerendering
+>directurl means when a user want access result without login it will first show login page then redirect url redirect it to 
+result only , not the home page. 

@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import  passportLocalMongoose from 'passport-local-mongoose';
 
 const Schema = mongoose.Schema;
@@ -9,7 +9,13 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
-
+phone: {
+        type: String,
+        required: true,
+        unique: true,
+        minlength: 10,
+        maxlength: 10,
+    },
 },
     { timestamps: true }
 )

@@ -1,4 +1,4 @@
-import navController from "../controllers/nav.controller.js"
+import StudentController from "../controllers/student.controller.js"
 import express from "express"
 import { isLoggedIn } from "../middleware.js"
 import passport from "passport"
@@ -6,16 +6,16 @@ import passport from "passport"
 const router=express.Router()
 
 router.route('/home')
-    .get(navController.renderHome)
+    .get(StudentController.renderHome)
 
 
 router.route('/academic')
-    .get(navController.renderAcademic)
+    .get(StudentController.renderAcademic)
 
 router.route('/result')
-    .get(isLoggedIn,navController.renderResult)
+    .get(isLoggedIn,StudentController.renderResult)
 
 router.route('/about')
-    .get(isLoggedIn,navController.renderAbout)
+    .get(isLoggedIn,StudentController.renderAbout)
 
 export default router;
