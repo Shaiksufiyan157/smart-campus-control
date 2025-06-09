@@ -18,8 +18,8 @@ router.route('/login')
 //     .post(authController.registerUser)
 
 router.route('/student/register')
-    .get(authController.RenderStudentForm)
-    .post(authController.RegisterStudent)
+    .get(isLoggedIn, authController.RenderStudentForm)
+    .post(isLoggedIn, authController.RegisterStudent)
 
 router.route('/logout')
     .post(authController.logout)
