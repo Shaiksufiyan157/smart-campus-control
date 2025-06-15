@@ -23,6 +23,7 @@ const __dirname = dirname(__filename);
 
 dotenv.config()
 const app = express()
+
 app.use(express.urlencoded({ extended: true })); // this is neccassary to read html form otherwise it will show error
 app.use(express.json()) // this will parse the form data
 app.engine('ejs', ejsMate)
