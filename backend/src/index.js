@@ -15,6 +15,7 @@ import { fileURLToPath } from 'url'; // this is for --------->"type" : "module o
 import { dirname } from "path" // this is for --------->"type" : "module only"
 import cookieParser from 'cookie-parser'
 import Student from "./models/student.model.js"
+import ResourceRouter from './routes/resources.route.js'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -30,7 +31,7 @@ app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.use(express.static('public'))
+app.use(express.static('src/public'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 
@@ -88,6 +89,7 @@ res.send(newUser);
 })
 app.use('/', authRouter)
 app.use('/', StudentRouter)
+app.use('/',ResourceRouter)
 app.get('/', (req, res) => {
     res.render('home.ejs')
 })
