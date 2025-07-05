@@ -45,7 +45,7 @@ Stop digging through chats or drives. Everything is just a search away.
 
 ## ✨ SNEAK PEEK
 
-![Smart Screenshot](https://your-screenshot-url.com/demo.jpg)  
+![Smart Screenshot](backend/src/public/smart-campus-control.png.jpg)  
 COMING SOON: Dark Mode and Offline Access
 
 ---
