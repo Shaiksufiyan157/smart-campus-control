@@ -1,6 +1,6 @@
-# 📘 SMART - YOUR ACADEMIC COMPANION
+# 📘 SMART CAMPUS CONTROL- YOUR ACADEMIC COMPANION
 
-Welcome to SMART, the ultimate platform where students can easily access and contribute:
+Welcome to SMART CAMPUS CONTROL, the ultimate platform where students can easily access and contribute:
 
 - CLASS NOTES  
 - PREVIOUS YEAR QUESTION PAPERS (PYQs)
