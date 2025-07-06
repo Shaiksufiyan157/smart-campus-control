@@ -7,6 +7,7 @@ Welcome to SMART CAMPUS CONTROL, the ultimate platform where students can easily
 
 Whether you're prepping for exams or just revising, SMART is designed to help you study smarter, not harder.
 
+Run Live -https://smart-campus-control.onrender.com/
 ---
 
 ## 🚀 FEATURES
