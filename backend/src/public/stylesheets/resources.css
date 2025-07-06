@@ -1,19 +1,11 @@
 #contributor-tocontribute{
 color: blue;
 height: 40%;
-/* background-color: gray; */
 display: flex;
 justify-content: space-between;
 border-radius: 10px;
 }
- /* #contributor{
-color: aqua; 
-border: 2px black solid;
-padding: 10px 20px;
-border-radius: 10px;
-text-align: center;
 
-} */
 #contributor {
   display: inline-block;
   border: 2px solid #222;
@@ -46,13 +38,13 @@ text-align: center;
 .want-to-contribute button:hover {
   background-color: #f0f0f0;
 }
-.pyq-section {
+.pyq-section ,.note-section{
   max-width: 1000px;
   margin: auto;
   text-align: center;
 }
 
-.pyq-heading h1 {
+.pyq-heading ,.notes-heading h1 {
   font-size: 2.5rem;
   color: #222;
   margin-bottom: 30px;

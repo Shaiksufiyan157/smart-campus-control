@@ -5,7 +5,7 @@ const renderpyq=(req,res)=>{
 res.render('resources/pyq.ejs')
 }
 const rendernotes=(req,res)=>{
-res.send("notes")
+res.render("resources/notes.ejs")
 }
 const resourcecontroller={
 renderpyq,

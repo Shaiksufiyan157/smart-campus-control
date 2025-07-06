@@ -1,0 +1,55 @@
+<%-layout("layout /boilerplate.ejs")%>
+
+    <section class="notes-section">
+
+        <div class="notes-container">
+            <div class="notes-heading">
+                <h1>SUBJECT NOTES</h1>
+            </div>
+            <div id="contributor-tocontribute">
+                <div id="contributor">
+                    The below notes are shared by the students
+                </div>
+                <div class="want-to-contribute">
+                    To become a contributor please click the below button
+                    <button class="contribute-btn">contribute</button>
+                </div>
+            </div>
+            <form action="">
+            <div class="filter-form">
+                <label for="subject">Subject</label>
+                <select name="subject" id="subject">
+                    <option value="Data Structures">Data Structures</option>
+                    <option value="Computer Networks">Computer Networks</option>
+                    <option value="Operating Systems">Operating Systems</option>
+                    <option value="Database Management Systems">Database Management Systems</option>
+                    <option value="Software Engineering">Software Engineering</option>
+                    <option value="Object Oriented Programming">Object Oriented Programming</option>
+
+                </select>
+                <label for="semester">Selct your semester</label>
+                <select name="semester" id="semester"> select the semester
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+                <label for="module">Select the module</label>
+                <select name="module" id="module">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" class="filter-btn">Apply</button>
+            </form>
+            <div class="notes"></div>
+        </div>
+
+    </section>
