@@ -1,7 +1,6 @@
 import express from "express"
 import authRouter from './routes/auth.route.js'
 import StudentRouter from './routes/student.route.js'
-import dotenv from 'dotenv'
 import { connectDB } from "./lib/db.js"
 import ejs from "ejs"
 import ejsMate from "ejs-mate"
@@ -16,7 +15,7 @@ import { dirname } from "path" // this is for --------->"type" : "module only"
 import cookieParser from 'cookie-parser'
 import Student from "./models/student.model.js"
 import ResourceRouter from './routes/resources.route.js'
-
+import dotenv from 'dotenv'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
