@@ -5,7 +5,7 @@ Welcome to SMART CAMPUS CONTROL, the ultimate platform where students can easily
 - CLASS NOTES  
 - PREVIOUS YEAR QUESTION PAPERS (PYQs)
 
-Whether you're prepping for exams or just revising, SMART is designed to help you study smarter, not harder.
+Whether you're prepping for exams or just revising, SMART CAMPUS CONTROL is designed to help you study smarter, not harder.
 
 Run Live -https://smart-campus-control.onrender.com/
 ---
@@ -46,8 +46,11 @@ Stop digging through chats or drives. Everything is just a search away.
 
 ## ✨ SNEAK PEEK
 
-![Smart Screenshot](backend/src/public/smart-campus-control.png.jpg)  
-COMING SOON: Dark Mode and Offline Access
+![Smart Screenshot](backend/src/public/smart-campus-control.png)  
+COMING SOON: 
+1. View Student details
+2. Faculty Information
+3. Dark Mode
 
 ---
 
