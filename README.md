@@ -31,7 +31,7 @@ Run Live -https://smart-campus-control.onrender.com/
 
 ---
 
-## 🌟 WHY USE SMART?
+## 🌟 WHY USE SMART CAMPUS CONTROL?
 
 FOCUSED ON WHAT MATTERS  
 SMART is built for academic success — clean, focused, and free from distractions or ads.
