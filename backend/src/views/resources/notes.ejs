@@ -1,5 +1,3 @@
-
-
 <%-layout("layout/boilerplate.ejs")%>
 
     <section class="notes-section">
@@ -17,43 +15,65 @@
                     <button class="contribute-btn">contribute</button>
                 </div>
             </div>
-            <form action="" >
-            <div class="filter-form">
-                <label for="subject">Subject</label>
-                <select name="subject" id="subject">
-                    <option value="Data Structures">Data Structures</option>
-                    <option value="Computer Networks">Computer Networks</option>
-                    <option value="Operating Systems">Operating Systems</option>
-                    <option value="Database Management Systems">Database Management Systems</option>
-                    <option value="Software Engineering">Software Engineering</option>
-                    <option value="Object Oriented Programming">Object Oriented Programming</option>
-
-                </select>
-                <label for="semester">Selct your semester</label>
-                <select name="semester" id="semester"> select the semester
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-                <label for="module">Select the module</label>
-                <select name="module" id="module">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-            <button type="submit" class="filter-btn">Apply</button>
+            <form action="" class="filter-form" novalidate method="post">
+                <div class="filter-form">
+                    <label for="subject">Subject</label>
+                    <select name="subject" id="subject">
+                        <option value="Data Structures">Data Structures</option>
+                        <option value="Computer Networks">Computer Networks</option>
+                        <option value="Operating Systems">Operating Systems</option>
+                        <option value="Database Management Systems">Database Management Systems</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Object Oriented Programming">Object Oriented Programming</option>
+                    </select>
+                    <label for="semester">Selct your semester</label>
+                    <select name="semester" id="semester"> select the semester
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                    <label for="module">Select the module</label>
+                    <select name="module" id="module">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <button type="submit" class="filter-btn btn btn-primary">Apply</button>
             </form>
-            <div class="notes">
-<img src="" alt="">
-</div>
+
+            <div class="notes rounded float-left">
+
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+<% for(let note of notes){ %>
+<% for(let image of note.images){ %>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="<%= image.url %>" alt="">
+                            <div class="card-body">
+                                <p class="card-text">subject-Data Structures</p>
+                                <p>code- 22CG168L</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group"> <button type="button"
+                                            class="btn btn-sm btn-outline-secondary">Download</button> </div> <small
+                                        class="text-body-secondary">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<% } %>
+<% } %>
+                </div>
+
+            </div>
         </div>
 
     </section>

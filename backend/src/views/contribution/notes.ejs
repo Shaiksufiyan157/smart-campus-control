@@ -1,6 +1,8 @@
 <%layout('layout/boilerplate.ejs')%>
 <form action="/addnotes" method="POST" novalidate class="validate-form" enctype="multipart/form-data" >
-<input type="text" name="fullname" id="">
+<label for="name"></label>
+<input type="text" id="name" name="title" placeholder="enter the name subject">
+
 <!-- <label for="notes">Add notes</label> -->
 <input type="file" id="notes" name="notes">
 
