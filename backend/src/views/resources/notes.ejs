@@ -12,7 +12,7 @@
                 </div>
                 <div class="want-to-contribute">
                     To become a contributor please click the below button
-                    <button class="contribute-btn">contribute</button>
+                    <a href="/addnotes"><button class="contribute-btn">contribute</button></a>
                 </div>
             </div>
             <form action="" class="filter-form" novalidate method="post">
@@ -59,7 +59,7 @@
                         <div class="card shadow-sm">
                             <img src="<%= image.url %>" alt="">
                             <div class="card-body">
-                                <p class="card-text">subject-Data Structures</p>
+                                <p class="card-text"><%= note.title %></p>
                                 <p>code- 22CG168L</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group"> <button type="button"
