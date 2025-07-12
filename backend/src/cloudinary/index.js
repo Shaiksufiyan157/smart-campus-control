@@ -13,8 +13,8 @@ const storage=new CloudinaryStorage({
 cloudinary,
 params:{
 folder:'backend',
-allowedFormats:['jpeg','png','jpg'],
-// resource_type:'auto'
+allowedFormats:['jpeg','png','jpg','pdf'],
+resource_type:'auto'
 }
 });
 
