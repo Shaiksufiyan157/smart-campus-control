@@ -5,7 +5,6 @@ const renderpyq = (req, res) => {
 }
 const rendernotes = async (req, res) => {
     const notes = await Note.find({});
-    console.log(notes)
     res.render("resources/notes.ejs", { notes })
 }
 const renderAddnotes = (req, res) => {
@@ -19,8 +18,7 @@ const Addnotes = async (req, res) => {
     // Notes.name=req.body.;
     Notes.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     await Notes.save();
-    console.log(Notes);
-    res.redirect('/home')
+    res.redirect('/notes');
 }
 const Addpyqs = (req, res) => {
     res.send(req.files)

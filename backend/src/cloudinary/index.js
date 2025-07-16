@@ -9,12 +9,16 @@ cloud_name:process.env.CLOUD_NAME,
 api_key:process.env.CLOUD_KEY,
 api_secret:process.env.CLOUD_SECRET
 });
+// cloudinary.Uploader.upload("my_document.pdf", :use_filename => true, :unique_filename => false)
 const storage=new CloudinaryStorage({
 cloudinary,
 params:{
 folder:'backend',
 allowedFormats:['jpeg','png','jpg','pdf'],
-resource_type:'auto'
+// public_id: (req, file) => {
+//       const fileName = path.basename(file.originalname, path.extname(file.originalname));
+//       return fileName;  // Use the original filename (without extension) as the public_id
+//     }
 }
 });
 
