@@ -15,7 +15,7 @@
                     <a href="/addnotes"><button class="contribute-btn">contribute</button></a>
                 </div>
             </div>
-            <form action="" class="filter-form" novalidate method="post">
+            <form action="/notes" class="filter-form" novalidate method="post">
                 <div class="filter-form">
                     <label for="subject">Subject</label>
                     <select name="subject" id="subject">
@@ -45,6 +45,7 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
+<input type="text" name="title">
                 </div>
                 <button type="submit" class="filter-btn btn btn-primary">Apply</button>
             </form>
@@ -57,7 +58,6 @@
 <% for(let image of note.images){ %>
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="<%= image.url %>" alt="">
                             <div class="card-body">
                                 <p class="card-text"><%= note.title %></p>
                                 <p>code- 22CG168L</p>

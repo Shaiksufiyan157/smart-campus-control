@@ -23,12 +23,19 @@ const Addnotes = async (req, res) => {
 const Addpyqs = (req, res) => {
     res.send(req.files)
 }
+const filter =async (req, res) => {
+const title=req.body.title;
+const notes=await Note.find({title});
+res.render("resources/notes.ejs", { notes })
+}
+
 const resourcecontroller = {
     renderpyq,
     rendernotes,
     renderAddnotes,
     renderAddpyqs,
     Addnotes,
-    Addpyqs
+    Addpyqs,
+    filter
 }
 export default resourcecontroller;

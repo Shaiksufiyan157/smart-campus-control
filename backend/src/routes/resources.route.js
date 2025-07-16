@@ -9,7 +9,9 @@ const router=express.Router()
 
 
 router.get('/pyq',resourcecontroller.renderpyq);
-router.get('/notes',resourcecontroller.rendernotes);
+router.route('/notes')
+.get(resourcecontroller.rendernotes)
+.post(resourcecontroller.filter)
 
 router.route('/addnotes')
 .get(resourcecontroller.renderAddnotes)
