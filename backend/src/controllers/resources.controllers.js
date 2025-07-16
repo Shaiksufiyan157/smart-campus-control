@@ -23,10 +23,17 @@ const Addnotes = async (req, res) => {
 const Addpyqs = (req, res) => {
     res.send(req.files)
 }
-const filter =async (req, res) => {
-const title=req.body.title;
-const notes=await Note.find({title});
-res.render("resources/notes.ejs", { notes })
+const filter = async (req, res) => {
+    const title = req.body.title;
+    if (title === "") {
+        const notes = await Note.find({});
+        res.render("resources/notes.ejs", { notes })
+    }
+    else {
+        const notes = await Note.find({ title });
+        res.render("resources/notes.ejs", { notes })
+    }
+
 }
 
 const resourcecontroller = {
