@@ -63,7 +63,7 @@ const sessionConfig = {
 //     }
 // }))
 
-// app.use(session(sessionConfig))
+app.use(session(sessionConfig))
 
 app.use(passport.initialize())
 app.use(passport.session())
