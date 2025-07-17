@@ -16,6 +16,7 @@ import cookieParser from 'cookie-parser'
 import Student from "./models/student.model.js"
 import ResourceRouter from './routes/resources.route.js'
 import dotenv from 'dotenv'
+import ContributeRouter from './routes/contribute.route.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -92,6 +93,7 @@ app.use('/',ResourceRouter)
 app.get('/', (req, res) => {
     res.render('home.ejs')
 })
+app.use('/',ContributeRouter);
 
 
 

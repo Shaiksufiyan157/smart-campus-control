@@ -13,10 +13,5 @@ router.route('/notes')
 .get(resourcecontroller.rendernotes)
 .post(resourcecontroller.filter)
 
-router.route('/addnotes')
-.get(resourcecontroller.renderAddnotes)
-.post(upload.array('notes'),resourcecontroller.Addnotes);
-router.route('/addpyqs')
-.get(resourcecontroller.renderAddpyqs)
-.post(upload.array('pyq'),resourcecontroller.Addpyqs);
+
 export default router;

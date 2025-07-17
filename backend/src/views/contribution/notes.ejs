@@ -1,29 +1,55 @@
-<%layout('layout /boilerplate.ejs')%>
-    <form action="/addnotes" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
-        <div class="notes-details">
-            <label for="subject" class="form-label">Subject</label>
-            <input type="text" class="form-control name=" subject" id="subject">
-            <label class="form-label" for="semester">Select the semester</label>
-            <select name="semester" id="semester"> select the semester
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
-            <label for="module">Select the module</label>
-            <select name="module" id="module">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-        <input type="file" id="notes" name="notes">
+<%layout('layout/boilerplate.ejs')%>
+    <div class="container">
+        <div class="card shadow-lg p-4">
+            <h4 class="mb-4 text-center">Upload Module Content</h4>
+            <form action="/addnotes" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="subcode" class="form-label fw-semibold">Subject Code</label>
+                        <input type="text" class="form-control" id="subcode" name="subcode"
+                            placeholder="Enter Subject Code">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="subject" class="form-label fw-semibold">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject name">
+                    </div>
+                </div>
 
-        <button type="submit">Submit</button>
-    </form>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="semester" class="form-label fw-semibold">Select your semester</label>
+                        <select class="form-select" id="semester" name="semester">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="module" class="form-label fw-semibold">Select the module</label>
+                        <select class="form-select" id="module" name="module">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label for="file" class="form-label fw-semibold">Choose file</label>
+                        <input class="form-control" type="file" id="notes" name="notes">
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
