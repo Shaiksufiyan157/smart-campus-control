@@ -9,9 +9,9 @@ const router=express.Router()
 
 router.route('/addnotes')
 .get(contributeController.renderAddnotes)
-.post(upload.array('notes'),contributeController.Addnotes);
+.post(upload.single('notes'),contributeController.Addnotes);
 router.route('/addpyqs')
 .get(contributeController.renderAddpyqs)
-.post(upload.array('pyq'),contributeController.Addpyqs);
+.post(upload.single('pyq'),contributeController.Addpyqs);
 
 export default router;

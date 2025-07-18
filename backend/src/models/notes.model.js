@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 
 const NotesSchema = new Schema({
     subcode: String,
-    images: [
-        {
-            url: String,
-            filename: String
-        },
-    ],
+    image:
+    {
+        url: String,
+        filename: String
+    }
+    ,
     subject: String,
     semester: {
         type: String,
