@@ -12,6 +12,6 @@ router.route('/addnotes')
 .post(upload.single('notes'),contributeController.Addnotes);
 router.route('/addpyqs')
 .get(contributeController.renderAddpyqs)
-.post(upload.single('pyq'),contributeController.Addpyqs);
+.post(upload.single('pyqs'),contributeController.Addpyqs);
 
 export default router;

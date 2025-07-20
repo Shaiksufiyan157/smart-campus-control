@@ -1,8 +1,51 @@
 <%layout('layout/boilerplate.ejs')%>
-<form action="/addpyqs" method="POST" novalidate class="validate-form" enctype="multipart/form-data" >
-<input type="text" name="fullname" id="">
-<!-- <label for="notes">Add notes</label> -->
-<input type="file" id="pyq" name="pyq">
+    <div class="container">
+        <div class="card shadow-lg p-4">
+            <h4 class="mb-4 text-center">Upload Previous Year Papers</h4>
+            <form action="/addpyqs" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="subcode" class="form-label fw-semibold">Subject Code</label>
+                        <input type="text" class="form-control" id="subcode" name="subcode"
+                            placeholder="Enter Subject Code">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="subject" class="form-label fw-semibold">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject"
+                            placeholder="Enter subject name">
+                    </div>
+                </div>
 
-<button type="submit">Submit</button>
-</form>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="semester" class="form-label fw-semibold">Select your semester</label>
+                        <select class="form-select" id="semester" name="semester">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="year" class="form-label fw-semibold">Enter Year</label>
+                        <input type="text" class="form-control" id="year" name="year"
+                            placeholder="Enter the year">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label for="file" class="form-label fw-semibold">Choose file</label>
+                        <input class="form-control" type="file" id="image" name="image">
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

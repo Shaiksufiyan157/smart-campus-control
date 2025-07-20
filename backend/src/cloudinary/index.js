@@ -14,13 +14,10 @@ const storage=new CloudinaryStorage({
 cloudinary,
 params:{
 folder:'backend',
-allowedFormats:['jpeg','png','jpg','pdf'],
-// public_id: (req, file) => {
-//       const fileName = path.basename(file.originalname, path.extname(file.originalname));
-//       return fileName;  // Use the original filename (without extension) as the public_id
-//     }
+allowed_formats:['jpeg','png','jpg','pdf'],
+resource_type:'auto'
 }
-});
+})
 
 const cloud={
 cloudinary,
