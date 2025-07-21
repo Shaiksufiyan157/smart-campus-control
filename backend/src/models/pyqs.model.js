@@ -20,6 +20,6 @@ const pyqSchema = new Schema({
     }
 })
 
-const  Pyq=new mongoose.model('Pyq',pyqSchema)
+const  Pyq=mongoose.model('Pyq',pyqSchema)
 
 export default Pyq;

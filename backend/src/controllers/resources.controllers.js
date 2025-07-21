@@ -1,17 +1,14 @@
 import Note from "../models/notes.model.js"
+import Pyq from "../models/pyqs.model.js"
 
-const renderpyq = (req, res) => {
-    res.render('resources/pyq.ejs')
+const renderpyq = async (req, res) => {
+    const pyqs = await Pyq.find({})
+    res.render('resources/pyq.ejs', { pyqs })
+
 }
 const rendernotes = async (req, res) => {
-    const notes = await Note.find({});
-// console.log(notes)
-
-// for(let note of notes){
-// console.log(note.image)
-// }
+    const notes = await Note.find({})
     res.render("resources/notes.ejs", { notes })
-    // console.log(notes)
 }
 
 const filter = async (req, res) => {

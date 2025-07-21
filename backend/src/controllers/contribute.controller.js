@@ -17,6 +17,7 @@ const Addnotes = async (req, res) => {
     //     public_id: customName,
     //     overwrite: true
     // });
+
     if (req.file.mimetype === "image/jpeg" || req.file.mimetype === "image/png" || req.file.mimetype === "image/jpg") {
         const originalName = path.parse(req.file.originalname).name;
         console.log(originalName)
@@ -51,7 +52,7 @@ const Addpyqs = async (req, res) => {
             public_id: originalName,
             overwrite: true,
         });
-        Pyq.image = {
+        Pyqs.image = {
             url: uploadedImage.secure_url,
             filename: uploadedImage.public_id,
         };
@@ -60,7 +61,7 @@ const Addpyqs = async (req, res) => {
 console.log(req.file)
 console.log(Pyqs)
 await Pyqs.save();
-res.send("itis working")
+res.redirect('/pyqs');
 }
 const contributeController = {
     renderAddnotes,
