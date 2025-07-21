@@ -13,7 +13,7 @@
                 </div>
                 <div class="want-to-contribute">
                     To become a contributor please click the below button
-                    <button class="contribute-btn">contribute</button>
+                    <a href="/addpyqs"><button class="contribute-btn">contribute</button></a>
                 </div>
             </div>
             <form action="">
@@ -47,10 +47,34 @@
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>
                     </select>
-                    <button type="submit" class="filter-btn">Apply</button>
+                    <button type="submit" class="filter-btn btn btn-primary">Apply</button>
                 </div>
             </form>
 
-            <div class="pyqs"></div>
+                        <div class="notes rounded float-left">
+                <div class="d-flex flex-wrap gap-4">
+                    <% for(let pyq of pyqs){ %>
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%=pyq.subject %>
+                                </h5>
+                                <p class="card-text">
+                                 subject code-<%=pyq.subcode %>
+                                </p>
+                                <p class="card-text">
+                                 semester-<%=pyq.semester %>
+                                </p>
+                                <p class="card-text">
+                                   module- <%=pyq.year %>
+                                </p>
+                                <a href="<%=pyq.image.url %>" target="_blank" class="btn btn-primary">Download</a>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+
+            </div>
         </div>
     </section>
