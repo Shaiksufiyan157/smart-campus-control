@@ -1,5 +1,6 @@
 import Note from "../models/notes.model.js"
 import Pyq from "../models/pyqs.model.js"
+import Pdf from "../models/pdf.model.js";
 import path, { format } from "path"
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -11,6 +12,7 @@ const renderAddpyqs = (req, res) => {
     res.render("contribution/pyq.ejs")
 }
 const Addnotes = async (req, res) => {
+res.send("qkdjqpk")
     const Notes = new Note(req.body);
     // const customName = content.subject + "(" + content.subcode + ")" || 'smart campus control';
     // const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
@@ -45,7 +47,6 @@ const Addnotes = async (req, res) => {
 const Addpyqs = async (req, res) => {
     const Pyqs = new Pyq(req.body)
     // res.send(req.files)
-    if (req.file.mimetype === "image/jpeg" || req.file.mimetype === "image/png" || req.file.mimetype === "image/jpg") {
         const originalName = path.parse(req.file.originalname).name;
         console.log(originalName)
         const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
@@ -57,16 +58,28 @@ const Addpyqs = async (req, res) => {
             filename: uploadedImage.public_id,
         };
 
-    }
-console.log(req.file)
-console.log(Pyqs)
-await Pyqs.save();
-res.redirect('/pyqs');
+    
+    console.log(req.file)
+    console.log(Pyqs)
+    await Pyqs.save();
+    res.redirect('/pyqs');
+}
+
+const renderpdf = (req, res) => {
+    res.render('contribution/pdf.ejs');
+}
+const addpdf = (req, res) => {
+    const Pdfs = new Pdf(req.body)
+    console.log(Pdfs)
+    console.log(req.file)
+    res.send("it is working")
 }
 const contributeController = {
     renderAddnotes,
     renderAddpyqs,
     Addnotes,
     Addpyqs,
+    renderpdf,
+    addpdf
 }
 export default contributeController;
