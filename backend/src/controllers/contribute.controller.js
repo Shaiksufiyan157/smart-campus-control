@@ -12,7 +12,7 @@ const renderAddpyqs = (req, res) => {
     res.render("contribution/pyq.ejs")
 }
 const Addnotes = async (req, res) => {
-res.send("qkdjqpk")
+// res.send("qkdjqpkcd b/")
     const Notes = new Note(req.body);
     // const customName = content.subject + "(" + content.subcode + ")" || 'smart campus control';
     // const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
