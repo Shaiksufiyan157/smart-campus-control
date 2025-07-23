@@ -8,7 +8,7 @@ const PdfSchema = new Schema({
 
     image: {
         filename: String,
-        path: String
+        url: String
     
     }
 

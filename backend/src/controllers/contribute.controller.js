@@ -3,6 +3,9 @@ import Pyq from "../models/pyqs.model.js"
 import Pdf from "../models/pdf.model.js";
 import path, { format } from "path"
 import { v2 as cloudinary } from 'cloudinary';
+import sharp from "sharp"
+import fs from "fs"
+// import cloud from "../cloudinary/index.js";
 
 
 const renderAddnotes = (req, res) => {
@@ -11,32 +14,75 @@ const renderAddnotes = (req, res) => {
 const renderAddpyqs = (req, res) => {
     res.render("contribution/pyq.ejs")
 }
-const Addnotes = async (req, res) => {
-// res.send("qkdjqpkcd b/")
-    const Notes = new Note(req.body);
-    // const customName = content.subject + "(" + content.subcode + ")" || 'smart campus control';
-    // const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
-    //     public_id: customName,
-    //     overwrite: true
-    // });
 
-    if (req.file.mimetype === "image/jpeg" || req.file.mimetype === "image/png" || req.file.mimetype === "image/jpg") {
-        const originalName = path.parse(req.file.originalname).name;
-        console.log(originalName)
-        const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+
+
+
+// --------------------------------------------------------------------------->
+const addpdf = async (req, res) => {
+    const Pdfs = new Pdf(req.body);
+
+    const originalName = path.parse(req.file.originalname).name;
+    console.log(originalName);
+    const originalSize = req.file.size;
+    console.log('Original File Size:', originalSize / 1024, 'KB');
+    // Path for the compressed image
+    const compressedFilePath = path.join('uploads', req.file.filename + '.jpg');
+
+
+    try {
+        // Compress the image using sharp (resize and compress to jpeg)
+        await sharp(req.file.path)
+            .resize(800) // Resize image to max width 800px (optional)
+            .jpeg({ quality: 70 }) // Compress the image to 70% quality (optional)
+            .toFile(compressedFilePath); // Save compressed file
+        const compressedFileSize = fs.statSync(compressedFilePath).size;
+        console.log('Compressed File Size:', compressedFileSize / 1024, 'KB');
+        // Upload the compressed file to Cloudinary
+        const uploadedImage = await cloudinary.uploader.upload(compressedFilePath, {
             public_id: originalName,
             overwrite: true,
         });
-        Notes.image = {
+
+        Pdfs.image = {
             url: uploadedImage.secure_url,
             filename: uploadedImage.public_id,
         };
 
+        // Optionally, remove the local compressed file after upload
+        fs.unlinkSync(compressedFilePath);
+
+        // Save the note
+        console.log(Pdfs)
+        await Pdfs.save();
+        res.redirect('/notes');
+    } catch (error) {
+        console.error('Error during file compression or upload:', error);
+        res.status(500).send('Error during compression or upload');
     }
-    // else {
-    // const image = req.file;
-    // Notes.image = { url: image.path, filename: image.filename };
-    // }
+}
+
+
+
+// ------------------------------------>
+
+
+
+
+const Addnotes = async (req, res) => {
+    const Notes = new Note(req.body);
+
+
+    const originalName = path.parse(req.file.originalname).name;
+    console.log(originalName)
+    const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+        public_id: originalName,
+        overwrite: true,
+    });
+    Notes.image = {
+        url: uploadedImage.secure_url,
+        filename: uploadedImage.public_id,
+    };
 
 
     // Notes.images = req.files.map(f => ({ url: f.path, filename: f.filename }))--------------------> to upload many images
@@ -47,18 +93,18 @@ const Addnotes = async (req, res) => {
 const Addpyqs = async (req, res) => {
     const Pyqs = new Pyq(req.body)
     // res.send(req.files)
-        const originalName = path.parse(req.file.originalname).name;
-        console.log(originalName)
-        const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
-            public_id: originalName,
-            overwrite: true,
-        });
-        Pyqs.image = {
-            url: uploadedImage.secure_url,
-            filename: uploadedImage.public_id,
-        };
+    const originalName = path.parse(req.file.originalname).name;
+    console.log(originalName)
+    const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+        public_id: originalName,
+        overwrite: true,
+    });
+    Pyqs.image = {
+        url: uploadedImage.secure_url,
+        filename: uploadedImage.public_id,
+    };
 
-    
+
     console.log(req.file)
     console.log(Pyqs)
     await Pyqs.save();
@@ -68,18 +114,19 @@ const Addpyqs = async (req, res) => {
 const renderpdf = (req, res) => {
     res.render('contribution/pdf.ejs');
 }
-const addpdf = (req, res) => {
-    const Pdfs = new Pdf(req.body)
-    console.log(Pdfs)
-    console.log(req.file)
-    res.send("it is working")
-}
+// const addpdf = (req, res) => {
+//     const Pdfs = new Pdf(req.body)
+//     console.log(Pdfs)
+//     console.log(req.file)
+//     res.send("it is working")
+// }
 const contributeController = {
     renderAddnotes,
     renderAddpyqs,
     Addnotes,
     Addpyqs,
     renderpdf,
-    addpdf
+    addpdf,
+    // AddnotesDemo
 }
 export default contributeController;
