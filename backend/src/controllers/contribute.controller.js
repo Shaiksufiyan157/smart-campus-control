@@ -5,8 +5,8 @@ import path, { format } from "path"
 import { v2 as cloudinary } from 'cloudinary';
 import sharp from "sharp"
 import fs from "fs"
+import { PDFDocument } from "pdf-lib";
 // import cloud from "../cloudinary/index.js";
-
 
 const renderAddnotes = (req, res) => {
     res.render("contribution/notes.ejs")
@@ -19,6 +19,10 @@ const renderAddpyqs = (req, res) => {
 
 
 // --------------------------------------------------------------------------->
+
+
+
+// cons
 const addpdf = async (req, res) => {
     const Pdfs = new Pdf(req.body);
 
@@ -60,8 +64,37 @@ const addpdf = async (req, res) => {
         console.error('Error during file compression or upload:', error);
         res.status(500).send('Error during compression or upload');
     }
+
+}
+// ------------------------>
+const addpdf2 = async (req, res) => {
+ try{   
+
+
+
+if (req?.file) {
+
+const filePath=`./uploads/${req.file.originalname}`
+const existingToBytes=fs.readFileSync(filePath);
+compressFile(existingToBytes,req,file.originalname);
+        return res.status(200).send("file uploaded");
+    }
+ }
+  catch(error) {
+
+        return res.status(500).send(`file was not uploaded ${error}`)
+
+    }
+
 }
 
+
+const compressFile=async(existingToBytes,originalname)=>{
+
+const pdfDoc=await PDFDocument.load(existingToBytes);
+const compressedPdfBytes=await pdfDoc.save();
+fs.writeFileSync(`./uploads/compressed/${originalname}`,compressedPdfBytes);
+}
 
 
 // ------------------------------------>
@@ -71,7 +104,7 @@ const addpdf = async (req, res) => {
 
 const Addnotes = async (req, res) => {
     const Notes = new Note(req.body);
-
+console.log(req.file)
 
     const originalName = path.parse(req.file.originalname).name;
     console.log(originalName)
@@ -127,6 +160,7 @@ const contributeController = {
     Addpyqs,
     renderpdf,
     addpdf,
+    addpdf2
     // AddnotesDemo
 }
 export default contributeController;
