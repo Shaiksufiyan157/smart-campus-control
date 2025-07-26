@@ -13,6 +13,7 @@ const router = express.Router()
 import fs from "fs"
 
 import ILovePDFApi from "@ilovepdf/ilovepdf-nodejs"
+import { isLoggedIn } from '../middleware.js';
 // import ILovePDFFile from '@ilovepdf/ilovepdf-js/ILovePDFFile.';
 
 const ilovepdf = new ILovePDFApi(process.env.ILP_PUBLIC_KEY, process.env.ILP_SECRET_KEY);
@@ -73,9 +74,6 @@ router.route('/addpdf')
 
         res.send("working fine")
         console.log("hello from no error")
-        // ---------------------------------->
-
-        // ---------------------------->
     })
 
 const compressFile = async (existingToBytes, originalname) => {
@@ -97,10 +95,10 @@ const compressFile = async (existingToBytes, originalname) => {
 
 
 router.route('/addnotes')
-    .get(contributeController.renderAddnotes)
-    .post(upload.single('notes'), contributeController.Addnotes);
+    .get(isLoggedIn,contributeController.renderAddnotes)
+    .post(isLoggedIn, upload.single('notes'), contributeController.Addnotes);
 router.route('/addpyqs')
-    .get(contributeController.renderAddpyqs)
-    .post(upload.single('pyqs'), contributeController.Addpyqs);
+    .get(isLoggedIn, contributeController.renderAddpyqs)
+    .post(isLoggedIn, upload.single('pyqs'), contributeController.Addpyqs);
 
 export default router;

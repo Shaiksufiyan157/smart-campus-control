@@ -59,7 +59,7 @@ const addpdf = async (req, res) => {
         // Save the note
         console.log(Pdfs)
         await Pdfs.save();
-        res.redirect('/notes');
+        res.redirect('/pyqs',);
     } catch (error) {
         console.error('Error during file compression or upload:', error);
         res.status(500).send('Error during compression or upload');
@@ -119,6 +119,7 @@ console.log(req.file)
 
 
     // Notes.images = req.files.map(f => ({ url: f.path, filename: f.filename }))--------------------> to upload many images
+    req.flash('success', 'Notes added successfully');
 
     await Notes.save();
     res.redirect('/notes');
@@ -141,6 +142,7 @@ const Addpyqs = async (req, res) => {
     console.log(req.file)
     console.log(Pyqs)
     await Pyqs.save();
+    req.flash('success', 'Pyq added successfully');
     res.redirect('/pyqs');
 }
 
