@@ -2,6 +2,7 @@ import { log } from "console";
 import User from "../models/user.model.js"
 import bcrypt from 'bcryptjs';
 import Student from "../models/student.model.js";
+import e from "connect-flash";
 
 
 export const rendersignup = (req, res) => {
@@ -38,15 +39,19 @@ const registerUser = async (req, res) => {
   const { email, username, password, phone } = req.body;
   try {
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.send('Email already exists');
+    if (existingUser.user) req.flash('error', 'User already exists');
+    // if (existingUser.username) req.flash('error', 'Username already exists');
+    // if (existingUser.email) req.flash('error', 'Email already exists');
 
     const user = new User({ email, username, phone })  // this is the feature of passportjs it doesnot need schema for password and username
     await User.register(user, password)
     res.redirect('/home');
   }
   catch (err) {
-    console.log(err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    // res.status(500).json({ error: 'Internal Server Error' });
+    // console.log(err);
+    // req.flash('error', err.message);
+    res.redirect('/register');
   }
 }
 const logout = (req, res, next) => {

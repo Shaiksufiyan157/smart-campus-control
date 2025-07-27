@@ -3,7 +3,7 @@ import Pyq from "../models/pyqs.model.js"
 
 const renderpyq = async (req, res) => {
     const pyqs = await Pyq.find({})
-    res.render('resources/pyq.ejs', { pyqs })
+    res.render('resources/pyq.ejs', { pyqs})
 
 }
 const rendernotes = async (req, res) => {

@@ -2,23 +2,25 @@
     <div class="container">
         <div class="card shadow-lg p-4">
             <h4 class="mb-4 text-center">Upload Module Content</h4>
-            <form action="/addnotes" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
+            <form action="/addnotes" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="subcode" class="form-label fw-semibold">Subject Code</label>
                         <input type="text" class="form-control" id="subcode" name="subcode"
-                            placeholder="Enter Subject Code">
+                            placeholder="Enter Subject Code" >
                     </div>
                     <div class="col-md-6">
                         <label for="subject" class="form-label fw-semibold">Subject</label>
-                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject name">
+                        <input type="text" class="form-control" id="subject" name="subject"
+                            placeholder="Enter subject name" >
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="semester" class="form-label fw-semibold">Select your semester</label>
-                        <select class="form-select" id="semester" name="semester">
+                        <select class="form-select" id="semester" name="semester" >
+                            <option value="" selected disabled>Select your semester</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -31,7 +33,8 @@
                     </div>
                     <div class="col-md-6">
                         <label for="module" class="form-label fw-semibold">Select the module</label>
-                        <select class="form-select" id="module" name="module">
+                        <select class="form-select" id="module" name="module" >
+                            <option value="" selected disabled>Select your module</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -44,11 +47,13 @@
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="file" class="form-label fw-semibold">Choose file</label>
-                        <input class="form-control" type="file" id="notes" name="notes">
-                    </div>
-                    <div class="col-md-4 d-flex align-items-end">
+                        <input class="form-control" type="file" id="notes" name="notes" required>
+                        <p style="color: red;">currently upload support upto 10MB files only<p>
+                                            <div class="col-md-4 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Submit</button>
                     </div>
+                    </div>
+
                 </div>
             </form>
         </div>

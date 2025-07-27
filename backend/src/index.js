@@ -18,7 +18,7 @@ import ResourceRouter from './routes/resources.route.js'
 import dotenv from 'dotenv'
 import ContributeRouter from './routes/contribute.route.js'
 import bodyParser from "body-parser"
-
+import flash from "connect-flash"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -69,6 +69,13 @@ const sessionConfig = {
 // }))
 
 app.use(session(sessionConfig))
+app.use(flash())
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 app.use(passport.initialize())
 app.use(passport.session())
