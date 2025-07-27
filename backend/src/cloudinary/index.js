@@ -16,12 +16,12 @@ const storage = new CloudinaryStorage({
         folder: 'backend',
         allowedFormats: ['jpeg', 'png', 'jpg', 'pdf'],
         resource_type: 'auto',
-        // transformation: [
-        //     {
-        //         quality: 'auto',  // Auto compress the PDF
-        //         fetch_format: 'auto'  // Choose the best format for the PDF (if needed)
-        //     }
-        // ],
+        transformation: [
+            {
+                quality: 'auto',  // Auto compress the PDF
+                fetch_format: 'auto'  // Choose the best format for the PDF (if needed)
+            }
+        ],
 q_auto:'low'
     }
 })

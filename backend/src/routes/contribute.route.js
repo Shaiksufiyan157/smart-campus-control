@@ -8,10 +8,10 @@ import cloud from '../cloudinary/index.js'
 import sharp from "sharp"
 import { PDFDocument as PDFDocument } from "pdf-lib"
 import path from 'path';
-const upload = multer({ storage: cloud.storage })
+const upload = multer({ storage:cloud.storage,limits: { fileSize: 10 * 1024 * 1024 }  })
 const router = express.Router()
 import fs from "fs"
-
+import cathAsync from '../utils/cathAsync.js';
 import ILovePDFApi from "@ilovepdf/ilovepdf-nodejs"
 import { isLoggedIn } from '../middleware.js';
 // import ILovePDFFile from '@ilovepdf/ilovepdf-js/ILovePDFFile.';
@@ -83,22 +83,47 @@ const compressFile = async (existingToBytes, originalname) => {
     fs.writeFileSync(`./uploads/compressed/${originalname}`, compressedPdfBytes);
 }
 
+// Error-handling middleware
+// router.use((err, req, res, next) => {
+//   if (err instanceof multer.MulterError) {
+//     if (err.code === 'LIMIT_FILE_SIZE') {
+//       req.flash('error', 'File too large. Max allowed size is 5 MB.');
+//       return res.redirect('/addnotes');
+//     }
+//     // Handle other multer errors if needed
+//   }
+
+//   console.error('Unexpected error:', err);
+//   req.flash('error', 'An unexpected error occurred.');
+//   res.redirect('/addnotes');
+// });
 
 
 
-
-
-
-
-// ----------------
-
-
-
+// ---------------------
+const notesUpload = (req, res, next) => {
+  upload.single('notes')(req, res, err => {
+    if (err?.code === 'LIMIT_FILE_SIZE') {
+req.flash('error','file is too large');
+res.redirect('/addnotes')
+}
+    next();
+  });
+};
+const pyqsUpload = (req, res, next) => {
+  upload.single('pyqs')(req, res, err => {
+    if (err?.code === 'LIMIT_FILE_SIZE') {
+req.flash('error','file is too large');
+res.redirect('/addpyqs')
+}
+    next();
+  });
+};
 router.route('/addnotes')
     .get(isLoggedIn,contributeController.renderAddnotes)
-    .post(isLoggedIn, upload.single('notes'), contributeController.Addnotes);
+    .post(isLoggedIn, notesUpload, cathAsync(contributeController.Addnotes));
 router.route('/addpyqs')
     .get(isLoggedIn, contributeController.renderAddpyqs)
-    .post(isLoggedIn, upload.single('pyqs'), contributeController.Addpyqs);
+    .post(isLoggedIn, pyqsUpload, cathAsync(contributeController.Addpyqs));
 
 export default router;

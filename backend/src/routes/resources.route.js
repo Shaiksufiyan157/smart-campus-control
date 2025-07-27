@@ -10,10 +10,10 @@ const router=express.Router()
 
 
 router.route('/pyqs')
-.get(isLoggedIn,resourcecontroller.renderpyq)
+.get(resourcecontroller.renderpyq)
 .post(resourcecontroller.filter)
 router.route('/notes')
-.get(isLoggedIn,resourcecontroller.rendernotes)
+.get(resourcecontroller.rendernotes)
 .post(resourcecontroller.filter)
 
 

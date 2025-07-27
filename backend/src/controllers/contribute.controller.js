@@ -68,19 +68,19 @@ const addpdf = async (req, res) => {
 }
 // ------------------------>
 const addpdf2 = async (req, res) => {
- try{   
+    try {
 
 
 
-if (req?.file) {
+        if (req?.file) {
 
-const filePath=`./uploads/${req.file.originalname}`
-const existingToBytes=fs.readFileSync(filePath);
-compressFile(existingToBytes,req,file.originalname);
-        return res.status(200).send("file uploaded");
+            const filePath = `./uploads/${req.file.originalname}`
+            const existingToBytes = fs.readFileSync(filePath);
+            compressFile(existingToBytes, req, file.originalname);
+            return res.status(200).send("file uploaded");
+        }
     }
- }
-  catch(error) {
+    catch (error) {
 
         return res.status(500).send(`file was not uploaded ${error}`)
 
@@ -89,11 +89,11 @@ compressFile(existingToBytes,req,file.originalname);
 }
 
 
-const compressFile=async(existingToBytes,originalname)=>{
+const compressFile = async (existingToBytes, originalname) => {
 
-const pdfDoc=await PDFDocument.load(existingToBytes);
-const compressedPdfBytes=await pdfDoc.save();
-fs.writeFileSync(`./uploads/compressed/${originalname}`,compressedPdfBytes);
+    const pdfDoc = await PDFDocument.load(existingToBytes);
+    const compressedPdfBytes = await pdfDoc.save();
+    fs.writeFileSync(`./uploads/compressed/${originalname}`, compressedPdfBytes);
 }
 
 
@@ -104,8 +104,7 @@ fs.writeFileSync(`./uploads/compressed/${originalname}`,compressedPdfBytes);
 
 const Addnotes = async (req, res) => {
     const Notes = new Note(req.body);
-console.log(req.file)
-
+    console.log(req.file)
     const originalName = path.parse(req.file.originalname).name;
     console.log(originalName)
     const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
@@ -127,8 +126,13 @@ console.log(req.file)
 const Addpyqs = async (req, res) => {
     const Pyqs = new Pyq(req.body)
     // res.send(req.files)
+try{
     const originalName = path.parse(req.file.originalname).name;
     console.log(originalName)
+    if (req.file.size > 100000) {
+        req.flash('error', 'upload less than 10 mb or contact admin')
+        res.redirect('/addpyq')
+    }
     const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
         public_id: originalName,
         overwrite: true,
@@ -144,6 +148,11 @@ const Addpyqs = async (req, res) => {
     await Pyqs.save();
     req.flash('success', 'Pyq added successfully');
     res.redirect('/pyqs');
+}catch(e){
+req.flash('error',e)
+console.log("erro")
+res.redirect('/addnotes')
+}
 }
 
 const renderpdf = (req, res) => {

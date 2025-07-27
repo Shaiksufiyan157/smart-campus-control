@@ -39,7 +39,9 @@ const registerUser = async (req, res) => {
   const { email, username, password, phone } = req.body;
   try {
     const existingUser = await User.findOne({ email });
-    // if (existingUser) req.flash('error', 'User already exists');
+    if (existingUser.user) req.flash('error', 'User already exists');
+    // if (existingUser.username) req.flash('error', 'Username already exists');
+    // if (existingUser.email) req.flash('error', 'Email already exists');
 
     const user = new User({ email, username, phone })  // this is the feature of passportjs it doesnot need schema for password and username
     await User.register(user, password)
@@ -47,9 +49,9 @@ const registerUser = async (req, res) => {
   }
   catch (err) {
     // res.status(500).json({ error: 'Internal Server Error' });
-console.log(err);
-req.flash('error', err.message);
-res.redirect('/register');
+    // console.log(err);
+    // req.flash('error', err.message);
+    res.redirect('/register');
   }
 }
 const logout = (req, res, next) => {
