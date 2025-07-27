@@ -12,9 +12,6 @@ router.route('/home')
 router.route('/academic')
     .get(StudentController.renderAcademic)
 
-router.route('/result')
-    .get(isLoggedIn,StudentController.renderResult)
-
 router.route('/about')
     .get(isLoggedIn,StudentController.renderAbout)
 

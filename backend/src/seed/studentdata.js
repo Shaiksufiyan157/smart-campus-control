@@ -61,6 +61,15 @@ const dummyResults = [
       { name: "Mathematics", marks: 75 },
       { name: "English", marks: 68 }
     ]
+  },
+  {
+    name: "Shaik Sufiyan",
+    usn: "2PD22CG032",
+    subjects: [
+      { name: "Physics", marks: 70 },
+      { name: "Mathematics", marks: 75 },
+      { name: "English", marks: 68 }
+    ]
   }
 ];
 export default dummyResults;
