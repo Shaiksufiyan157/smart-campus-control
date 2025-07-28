@@ -109,9 +109,10 @@ app.use('/',ContributeRouter);
 app.use('/',resultRoute);
 
 
-
+await connectDB()
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
-    console.log("serving on port: " + PORT)
-    connectDB()
-})
+// app.listen(PORT, () => {
+//     console.log("serving on port: " + PORT)
+//     connectDB()
+// })
+export default serverless(app);
