@@ -125,13 +125,13 @@ const Addnotes = async (req, res) => {
 }
 const Addpyqs = async (req, res) => {
     const Pyqs = new Pyq(req.body)
-    // res.send(req.files)
+
 try{
     const originalName = path.parse(req.file.originalname).name;
     console.log(originalName)
-    if (req.file.size > 100000) {
+    if (req.file.size > 1000000) {
         req.flash('error', 'upload less than 10 mb or contact admin')
-        res.redirect('/addpyq')
+        res.redirect('/addpyqs')
     }
     const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
         public_id: originalName,
@@ -142,16 +142,13 @@ try{
         filename: uploadedImage.public_id,
     };
 
-
-    console.log(req.file)
-    console.log(Pyqs)
     await Pyqs.save();
     req.flash('success', 'Pyq added successfully');
     res.redirect('/pyqs');
 }catch(e){
 req.flash('error',e)
-console.log("erro")
-res.redirect('/addnotes')
+console.log("error")
+res.redirect('/addpyqs')
 }
 }
 

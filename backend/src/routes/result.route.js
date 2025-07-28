@@ -9,7 +9,7 @@ import { isLoggedIn } from "../middleware.js";
 router.get('/addresult',isLoggedIn,result.seedResult)
 
 router.route('/result')
-.get(result.renderSearch)
+.get(isLoggedIn,result.renderSearch)
 .post(result.findResult)
 
 export default router;

@@ -83,24 +83,10 @@ const compressFile = async (existingToBytes, originalname) => {
     fs.writeFileSync(`./uploads/compressed/${originalname}`, compressedPdfBytes);
 }
 
-// Error-handling middleware
-// router.use((err, req, res, next) => {
-//   if (err instanceof multer.MulterError) {
-//     if (err.code === 'LIMIT_FILE_SIZE') {
-//       req.flash('error', 'File too large. Max allowed size is 5 MB.');
-//       return res.redirect('/addnotes');
-//     }
-//     // Handle other multer errors if needed
-//   }
-
-//   console.error('Unexpected error:', err);
-//   req.flash('error', 'An unexpected error occurred.');
-//   res.redirect('/addnotes');
-// });
 
 
 
-// ---------------------
+
 const notesUpload = (req, res, next) => {
   upload.single('notes')(req, res, err => {
     if (err?.code === 'LIMIT_FILE_SIZE') {
@@ -124,6 +110,6 @@ router.route('/addnotes')
     .post(isLoggedIn, notesUpload, cathAsync(contributeController.Addnotes));
 router.route('/addpyqs')
     .get(isLoggedIn, contributeController.renderAddpyqs)
-    .post(isLoggedIn, pyqsUpload, cathAsync(contributeController.Addpyqs));
+    .post(isLoggedIn, pyqsUpload, contributeController.Addpyqs);
 
 export default router;
