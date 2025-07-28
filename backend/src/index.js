@@ -20,7 +20,7 @@ import dotenv from 'dotenv'
 import ContributeRouter from './routes/contribute.route.js'
 import bodyParser from "body-parser"
 import flash from "connect-flash"
-
+import serverless from 'serverless-http';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -109,11 +109,11 @@ app.use('/',ContributeRouter);
 app.use('/',resultRoute);
 
 
+await connectDB()
+export const handler = serverless(app);
 
-
-
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-    console.log("serving on port: " + PORT)
-    connectDB()
-})
+// const PORT = process.env.PORT;
+// app.listen(PORT, () => {
+//     console.log("serving on port: " + PORT)
+//     connectDB()
+// })
