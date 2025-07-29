@@ -6,7 +6,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import sharp from "sharp"
 import fs from "fs"
 import { PDFDocument } from "pdf-lib";
-// import cloud from "../cloudinary/index.js";
+
 
 const renderAddnotes = (req, res) => {
     res.render("contribution/notes.ejs")
@@ -18,7 +18,7 @@ const renderAddpyqs = (req, res) => {
 
 
 
-// --------------------------------------------------------------------------->
+
 
 
 
@@ -104,9 +104,7 @@ const compressFile = async (existingToBytes, originalname) => {
 
 const Addnotes = async (req, res) => {
     const Notes = new Note(req.body);
-    console.log(req.file)
     const originalName = path.parse(req.file.originalname).name;
-    console.log(originalName)
     const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
         public_id: originalName,
         overwrite: true,
@@ -128,7 +126,6 @@ const Addpyqs = async (req, res) => {
 
 try{
     const originalName = path.parse(req.file.originalname).name;
-    console.log(originalName)
     if (req.file.size > 1000000) {
         req.flash('error', 'upload less than 10 mb or contact admin')
         res.redirect('/addpyqs')
@@ -155,12 +152,7 @@ res.redirect('/addpyqs')
 const renderpdf = (req, res) => {
     res.render('contribution/pdf.ejs');
 }
-// const addpdf = (req, res) => {
-//     const Pdfs = new Pdf(req.body)
-//     console.log(Pdfs)
-//     console.log(req.file)
-//     res.send("it is working")
-// }
+
 const contributeController = {
     renderAddnotes,
     renderAddpyqs,

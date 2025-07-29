@@ -71,6 +71,16 @@ const sessionConfig = {
 
 app.use(session(sessionConfig))
 app.use(flash())
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy({
+    usernameField: 'email'
+},User.authenticate()))
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
@@ -78,27 +88,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use(passport.initialize())
-app.use(passport.session())
-passport.use(new LocalStrategy(User.authenticate()))
-
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
-
-// app.use((req,res,next)=>{
-//     res.locals.currentUser=req.user
-//     // res.locals.success=req.flash('success')
-//     // res.locals.error=req.flash('error')
-//     next()
-// })
-
-
-
-app.get('/fakesignup',async (req,res)=>{
-const user=new User({username:"shaik sufiyan",email:"shaik@gmail.com"})
-const newUser= await User.register(user,"12345")
-res.send(newUser);
-})
 app.use('/', authRouter)
 app.use('/', StudentRouter)
 app.use('/',ResourceRouter)
@@ -108,8 +97,14 @@ app.get('/', (req, res) => {
 app.use('/',ContributeRouter);
 app.use('/',resultRoute);
 
+// app.use('*',(req,res,next)=>{
+//     res.render('notfound.ejs')
+// next();
+// })
 
-await connectDB()
+app.use((req,res)=>{
+res.render('notfound.ejs')
+})
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log("serving on port: " + PORT)

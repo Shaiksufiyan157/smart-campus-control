@@ -1,4 +1,4 @@
-const authenticateToken=(req, res, next) =>{
+const authenticateToken = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).send('Access Denied: No Token');
   try {
@@ -8,13 +8,22 @@ const authenticateToken=(req, res, next) =>{
     res.status(400).send('Invalid Token');
   }
 }
+const storeReturnTo = (req, res, next) => {
+  if (req.session.returnTo) {
+    res.locals.returnTo = req.session.returnTo;
 
-export const isLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-req.flash('error','You must be sign in first')
-        return res.redirect('/login');
-    }
-    next();
+  }
+  next();
+}
+const isLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    req.session.returnTo = req.originalUrl
+    req.flash('error', 'You must be sign in first')
+    return res.redirect('/login');
+  }
+  next();
 }
 
-export default {isLoggedIn};
+const middleware = { isLoggedIn, storeReturnTo };
+
+export default middleware;

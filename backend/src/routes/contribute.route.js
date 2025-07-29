@@ -13,7 +13,7 @@ const router = express.Router()
 import fs from "fs"
 import cathAsync from '../utils/cathAsync.js';
 import ILovePDFApi from "@ilovepdf/ilovepdf-nodejs"
-import { isLoggedIn } from '../middleware.js';
+import middleware from '../middleware.js';
 // import ILovePDFFile from '@ilovepdf/ilovepdf-js/ILovePDFFile.';
 
 const ilovepdf = new ILovePDFApi(process.env.ILP_PUBLIC_KEY, process.env.ILP_SECRET_KEY);
@@ -106,10 +106,10 @@ res.redirect('/addpyqs')
   });
 };
 router.route('/addnotes')
-    .get(isLoggedIn,contributeController.renderAddnotes)
-    .post(isLoggedIn, notesUpload, cathAsync(contributeController.Addnotes));
+    .get(middleware.isLoggedIn,contributeController.renderAddnotes)
+    .post(middleware.isLoggedIn, notesUpload, cathAsync(contributeController.Addnotes));
 router.route('/addpyqs')
-    .get(isLoggedIn, contributeController.renderAddpyqs)
-    .post(isLoggedIn, pyqsUpload, contributeController.Addpyqs);
+    .get(middleware.isLoggedIn, contributeController.renderAddpyqs)
+    .post(middleware.isLoggedIn, pyqsUpload, contributeController.Addpyqs);
 
 export default router;
