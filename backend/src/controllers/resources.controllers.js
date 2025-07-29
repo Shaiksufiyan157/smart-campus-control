@@ -9,13 +9,13 @@ const renderpyq = async (req, res) => {
 const rendernotes = async (req, res) => {
     const notes = await Note.find({})
     res.render("resources/notes.ejs", { notes })
+
 }
 
 const filter = async (req, res) => {
     const title = req.body.title;
     if (title === "") {
         const notes = await Note.find({})
-        console.log(notes)
         res.render("resources/notes.ejs", { notes })
     }
     else {

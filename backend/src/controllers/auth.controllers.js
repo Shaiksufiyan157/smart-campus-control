@@ -3,7 +3,7 @@ import User from "../models/user.model.js"
 import bcrypt from 'bcryptjs';
 import Student from "../models/student.model.js";
 import e from "connect-flash";
-
+import catchAsync from "../utils/cathAsync.js";
 
 export const rendersignup = (req, res) => {
   res.render("user/signup.ejs")
@@ -15,54 +15,58 @@ const renderlogin = (req, res) => {
 
 
 const login = async (req, res) => {
-  const { email, password, username } = req.body;
-
+  const { email } = req.body;
   // const user = await User.findOne({ email });
-  // if (!user) return res.send('User not found');
-
-  // const valid = await bcrypt.compare(password, user.password);
-  // if (!valid) return res.send('Invalid password');
-
-  // const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1d' });
-  // res.cookie('token', token, {
-  //   httpOnly: true,
-  //   maxAge: 24 * 60 * 60 * 1000 // 1 day
-  // });
-  res.redirect('home');
+  // console.log(user)
+  // console.log(user.username)
+  const redirectUrl = res.locals.returnTo || '/home';
+  delete req.session.returnTo
+  req.flash('success', `Welome back`)
+  res.redirect(redirectUrl);
 };
 
 
 
 
-const registerUser = async (req, res) => {
-  console.log(req.body)
-  const { email, username, password, phone } = req.body;
+const registerUser = catchAsync(async (req, res) => {
   try {
+    const { email, username, password, phone } = req.body;
     const existingUser = await User.findOne({ email });
-    if (existingUser.user) req.flash('error', 'User already exists');
-    // if (existingUser.username) req.flash('error', 'Username already exists');
-    // if (existingUser.email) req.flash('error', 'Email already exists');
-
+    if (existingUser) {
+      req.flash('error', 'user already exists with this email');
+    }
     const user = new User({ email, username, phone })  // this is the feature of passportjs it doesnot need schema for password and username
-    await User.register(user, password)
+    const registereduser = await User.register(user, password)
+    req.login(registereduser, err => {
+      if (err) return next(err)
+      else {
+        req.flash('success', 'Welcome')
+        res.redirect('/home')
+      }
+    })
+    console.log(registereduser)
+    req.flash('success', 'registered successfully')
     res.redirect('/home');
   }
-  catch (err) {
-    // res.status(500).json({ error: 'Internal Server Error' });
-    // console.log(err);
-    // req.flash('error', err.message);
-    res.redirect('/register');
+  catch (e) {
+    res.redirect('register');
   }
-}
+
+});
 const logout = (req, res, next) => {
   // res.clearCookie('token'); // clears cookie named 'token'-----> this method is for jwt
+  // res.redirect("/home")
   req.logout(function (err) {
-    if (err) return next(err)
-    res.send("loggedout successfully")
+    if (err) {
+      return next(err);
+    }
+    req.flash('success', 'Logged out successfully');
+    res.redirect("/home")
   })
 
 };
 const RenderStudentForm = (req, res) => {
+  req.flash('error', 'user not registered')
   res.render('student/new')
 }
 
