@@ -97,11 +97,6 @@ app.get('/', (req, res) => {
 app.use('/',ContributeRouter);
 app.use('/',resultRoute);
 
-// app.use('*',(req,res,next)=>{
-//     res.render('notfound.ejs')
-// next();
-// })
-
 app.use((req,res)=>{
 res.render('notfound.ejs')
 })

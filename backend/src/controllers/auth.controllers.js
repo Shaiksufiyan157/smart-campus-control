@@ -16,12 +16,13 @@ const renderlogin = (req, res) => {
 
 const login = async (req, res) => {
   const { email } = req.body;
-  // const user = await User.findOne({ email });
+  const user = await User.findOne({ email });
   // console.log(user)
   // console.log(user.username)
   const redirectUrl = res.locals.returnTo || '/home';
   delete req.session.returnTo
-  req.flash('success', `Welome back`)
+console.log(res.locals.currentUser)
+  req.flash('success', `Welome back ${user.username}`);
   res.redirect(redirectUrl);
 };
 
@@ -40,22 +41,20 @@ const registerUser = catchAsync(async (req, res) => {
     req.login(registereduser, err => {
       if (err) return next(err)
       else {
-        req.flash('success', 'Welcome')
+        req.flash('success', `${username}welcome to Smart Campus Control`);
         res.redirect('/home')
       }
     })
-    console.log(registereduser)
-    req.flash('success', 'registered successfully')
-    res.redirect('/home');
   }
   catch (e) {
+console.log(e.message);
+req.flash('error', 'user already exists with this credentials');
     res.redirect('register');
   }
 
 });
 const logout = (req, res, next) => {
   // res.clearCookie('token'); // clears cookie named 'token'-----> this method is for jwt
-  // res.redirect("/home")
   req.logout(function (err) {
     if (err) {
       return next(err);
