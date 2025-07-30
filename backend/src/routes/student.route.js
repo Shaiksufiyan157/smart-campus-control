@@ -13,6 +13,6 @@ router.route('/academic')
     .get(StudentController.renderAcademic)
 
 router.route('/about')
-    .get(middleware.isLoggedIn,StudentController.renderAbout)
+    .get(StudentController.renderAbout)
 
 export default router;

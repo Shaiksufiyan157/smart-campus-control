@@ -17,10 +17,6 @@ router.route('/register')
     .get(authController.rendersignup)
     .post(authController.registerUser)
 
-// router.route('/faculty/register')
-//     .get(authController.RenderFacultyForm)
-//     .post(authController.registerUser)
-
 router.route('/student/register')
     .get(middleware.isLoggedIn, authController.RenderStudentForm)
     .post(middleware.isLoggedIn, authController.RegisterStudent)
