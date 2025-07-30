@@ -17,11 +17,8 @@ const renderlogin = (req, res) => {
 const login = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
-  // console.log(user)
-  // console.log(user.username)
   const redirectUrl = res.locals.returnTo || '/home';
   delete req.session.returnTo
-console.log(res.locals.currentUser)
   req.flash('success', `Welome back ${user.username}`);
   res.redirect(redirectUrl);
 };
@@ -47,7 +44,6 @@ const registerUser = catchAsync(async (req, res) => {
     })
   }
   catch (e) {
-console.log(e.message);
 req.flash('error', 'user already exists with this credentials');
     res.redirect('register');
   }
