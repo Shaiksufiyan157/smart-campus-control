@@ -41,7 +41,7 @@ const registerUser = catchAsync(async (req, res) => {
     req.login(registereduser, err => {
       if (err) return next(err)
       else {
-        req.flash('success', `${username}welcome to Smart Campus Control`);
+        req.flash('success', `${username}, welcome to Smart Campus Control`);
         res.redirect('/home')
       }
     })
