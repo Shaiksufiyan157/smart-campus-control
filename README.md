@@ -84,7 +84,7 @@ Developed by Shaik Sufiyan
 ## Installation ⚙️
 
 ### Clone the Repository
-```bash
+
 git clone https://github.com/Shaiksufiyan157/smart-campus-control.git
 cd smart-campus-control
 
@@ -92,23 +92,22 @@ cd smart-campus-control
 
 ```bash
 npm install
-Configure Environment Variables 🔑
-Please ensure you configure the following environment variables in your .env file:
-
-#### MongoDB URI for connecting to your database
+```
+## Configure Environment Variables 🔑
+### Please ensure you configure the following environment variables in your .env file:
+### MongoDB URI for connecting to your database
+### The port to run the application on (default is 3000)
+```bash
+PORT=3000
 DB_URI=your_mongo_db_connection_string
-
-#### Cloudinary credentials for file storage
+Cloudinary credentials for file storage
 CLOUD_NAME=your_cloud_name  
 CLOUD_KEY=your_api_key  
 CLOUD_SECRET=your_api_secret
 
-#### Session secret for secure authentication
-SESSION_SECRET=your_session_secret
-
-#### The port to run the application on (default is 3000)
-PORT=3000
+```
 Start the Application 🚀
-npm start
+```bash
+npm run dev
+```
 Open http://localhost:3000 in your browser.
-
