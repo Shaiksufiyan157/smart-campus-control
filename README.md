@@ -54,6 +54,32 @@ This platform helps reduce study barriers, encourages collaboration, and promote
 - Uploaded files are stored and delivered via **Cloudinary**, ensuring fast, reliable access and scalable storage.
 
 ---
+## Usage 📖
+
+- After registration/login, users can upload question papers and subject notes easily.
+- Users can browse by subject, academic year, or college to find specific resources.
+- The search bar helps quickly locate desired papers or topics.
+- Uploaded files are securely stored on the cloud, ensuring quick access anytime.
+
+---
+
+## Contributing 🤝
+
+Contributions are welcome! To contribute:
+
+1. 🍴 Fork the repository
+2. 🌱 Create a feature branch (`git checkout -b feature-name`)
+3. 📝 Commit your changes (`git commit -m 'Add new feature'`)
+4. 📤 Push to the branch (`git push origin feature-name`)
+5. 🔀 Open a Pull Request describing your changes
+
+Please ensure your code follows existing style conventions and is well-documented.
+
+---
+
+## Credits 👏
+
+Developed by Shaik Sufiyan
 
 ## Installation ⚙️
 
@@ -86,29 +112,3 @@ Start the Application 🚀
 npm start
 Open http://localhost:3000 in your browser.
 
-Usage 📖
-After registration/login, users can upload question papers and subject notes easily.
-
-Users can browse by subject, academic year, or college to find specific resources.
-
-The search bar helps quickly locate desired papers or topics.
-
-Uploaded files are securely stored on the cloud, ensuring quick access anytime.
-
-Contributing 🤝
-Contributions are welcome! To contribute:
-
-🍴 Fork the repository
-
-🌱 Create a feature branch (git checkout -b feature-name)
-
-📝 Commit your changes (git commit -m 'Add new feature')
-
-📤 Push to the branch (git push origin feature-name)
-
-🔀 Open a Pull Request describing your changes
-
-Please ensure your code follows existing style conventions and is well-documented.
-
-Credits 👏
-Developed by Shaik Sufiyan
