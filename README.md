@@ -42,7 +42,7 @@ This platform helps reduce study barriers, encourages collaboration, and promote
 | Feature            | Technology             | Description                              |
 |--------------------|------------------------|------------------------------------------|
 | **Backend**        | Node.js, Express.js    | Server and API handling                  |
-| **Frontend**       | EJS (Embedded JavaScript Templates) | Dynamic server-rendered views            |
+| **Frontend**       | EJS , React (Future) | Dynamic server-rendered views, React for future frontend |
 | **Database**       | MongoDB                | Document-oriented data storage           |
 | **Authentication** | Passport.js            | Secure user login, signup, and session management |
 | **File Upload**    | Multer                 | Handling multipart file uploads          |
