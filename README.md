@@ -58,36 +58,36 @@ This platform helps reduce study barriers, encourages collaboration, and promote
 ## Installation ⚙️
 
 ### Clone the Repository
-```bash
-git clone <your_repo_url>
+
+git clone https://github.com/Shaiksufiyan157/smart-campus-control.git
 cd smart-campus-control
+Apologies for the misunderstanding earlier. Here's the pure Markdown without any additional explanations. This should now be exactly what you're looking for:
 
-<<<<<<< HEAD
-Install Dependencies
-=======
+markdown
+Copy
 ## Install Dependencies
->>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
+
+```bash
 npm install
-
 Configure Environment Variables 🔑
-Create a .env file in the root directory with the following variables:
-<<<<<<< HEAD
-=======
+Please ensure you configure the following environment variables in your .env file:
 
->>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
-MONGODB_URI=your_mongo_db_connection_string
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+#### MongoDB URI for connecting to your database
+DB_URI=your_mongo_db_connection_string
+
+#### Cloudinary credentials for file storage
+CLOUD_NAME=your_cloud_name  
+CLOUD_KEY=your_api_key  
+CLOUD_SECRET=your_api_secret
+
+#### Session secret for secure authentication
 SESSION_SECRET=your_session_secret
-PORT=3000
 
+#### The port to run the application on (default is 3000)
+PORT=3000
 Start the Application 🚀
-npm run dev
-<<<<<<< HEAD
+npm start
 Open http://localhost:3000 in your browser.
-=======
->>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
 
 Usage 📖
 After registration/login, users can upload question papers and subject notes easily.
@@ -114,8 +114,4 @@ Contributions are welcome! To contribute:
 Please ensure your code follows existing style conventions and is well-documented.
 
 Credits 👏
-<<<<<<< HEAD
 Developed by Shaik Sufiyan
-=======
-Developed by [Your Name or Team]
->>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
