@@ -5,14 +5,14 @@ A collaborative platform for college students to share, find, and access subject
 ---
 
 ## Table of Contents 📑
-- [Project Description](#project-description)
-- [Key Features](#key-features)
-- [Technical Overview](#technical-overview)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
+- Project Description
+- Key Features
+- Technical Overview
+- Installation
+- Usage
+- Contributing
+- Credits
+- License
 
 ---
 
@@ -58,13 +58,10 @@ This platform helps reduce study barriers, encourages collaboration, and promote
 ## Installation ⚙️
 
 ### Clone the Repository
-
+```bash
 git clone https://github.com/Shaiksufiyan157/smart-campus-control.git
 cd smart-campus-control
-Apologies for the misunderstanding earlier. Here's the pure Markdown without any additional explanations. This should now be exactly what you're looking for:
 
-markdown
-Copy
 ## Install Dependencies
 
 ```bash
