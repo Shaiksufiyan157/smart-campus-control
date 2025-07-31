@@ -1,6 +1,7 @@
 import express from "express"
 import authRouter from './routes/auth.route.js'
 import StudentRouter from './routes/student.route.js'
+import resultRoute from './routes/result.route.js'
 import { connectDB } from "./lib/db.js"
 import ejs from "ejs"
 import ejsMate from "ejs-mate"
@@ -17,7 +18,9 @@ import Student from "./models/student.model.js"
 import ResourceRouter from './routes/resources.route.js'
 import dotenv from 'dotenv'
 import ContributeRouter from './routes/contribute.route.js'
-
+import bodyParser from "body-parser"
+import flash from "connect-flash"
+import serverless from 'serverless-http';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -34,6 +37,8 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static('src/public'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // const store = MongoDBStore.create({
 //     mongoUrl: process.env.DB_URI,// this creates a session collection in mongo database
@@ -65,28 +70,24 @@ const sessionConfig = {
 // }))
 
 app.use(session(sessionConfig))
+app.use(flash())
+
 
 app.use(passport.initialize())
 app.use(passport.session())
-passport.use(new LocalStrategy(User.authenticate()))
+passport.use(new LocalStrategy({
+    usernameField: 'email'
+},User.authenticate()))
 
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
-
-// app.use((req,res,next)=>{
-//     res.locals.currentUser=req.user
-//     // res.locals.success=req.flash('success')
-//     // res.locals.error=req.flash('error')
-//     next()
-// })
-
-
-
-app.get('/fakesignup',async (req,res)=>{
-const user=new User({username:"shaik sufiyan",email:"shaik@gmail.com"})
-const newUser= await User.register(user,"12345")
-res.send(newUser);
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
 })
+
 app.use('/', authRouter)
 app.use('/', StudentRouter)
 app.use('/',ResourceRouter)
@@ -94,13 +95,14 @@ app.get('/', (req, res) => {
     res.render('home.ejs')
 })
 app.use('/',ContributeRouter);
+app.use('/',resultRoute);
 
-
-
-
-
+app.use((req,res)=>{
+res.render('notfound.ejs')
+})
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log("serving on port: " + PORT)
     connectDB()
 })
+// export default serverless(app);

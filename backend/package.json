@@ -12,8 +12,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@ilovepdf/ilovepdf-js": "^0.3.0",
+    "@ilovepdf/ilovepdf-js-core": "^0.3.2",
+    "@ilovepdf/ilovepdf-nodejs": "^0.3.1",
     "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
     "cloudinary": "^1.41.3",
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
@@ -21,6 +26,7 @@
     "ejs-mate": "^4.0.0",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.15.1",
@@ -29,6 +35,10 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1",
+    "serverless-http": "^3.2.0",
+    "sharp": "^0.34.3",
     "url": "^0.11.4"
   },
   "devDependencies": {

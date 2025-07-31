@@ -2,7 +2,8 @@ import { log } from "console";
 import User from "../models/user.model.js"
 import bcrypt from 'bcryptjs';
 import Student from "../models/student.model.js";
-
+import e from "connect-flash";
+import catchAsync from "../utils/cathAsync.js";
 
 export const rendersignup = (req, res) => {
   res.render("user/signup.ejs")
@@ -14,50 +15,53 @@ const renderlogin = (req, res) => {
 
 
 const login = async (req, res) => {
-  const { email, password, username } = req.body;
-
-  // const user = await User.findOne({ email });
-  // if (!user) return res.send('User not found');
-
-  // const valid = await bcrypt.compare(password, user.password);
-  // if (!valid) return res.send('Invalid password');
-
-  // const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1d' });
-  // res.cookie('token', token, {
-  //   httpOnly: true,
-  //   maxAge: 24 * 60 * 60 * 1000 // 1 day
-  // });
-  res.redirect('home');
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  const redirectUrl = res.locals.returnTo || '/home';
+  delete req.session.returnTo
+  req.flash('success', `Welome back ${user.username}`);
+  res.redirect(redirectUrl);
 };
 
 
 
 
-const registerUser = async (req, res) => {
-  console.log(req.body)
-  const { email, username, password, phone } = req.body;
+const registerUser = catchAsync(async (req, res) => {
   try {
+    const { email, username, password, phone } = req.body;
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.send('Email already exists');
-
+    if (existingUser) {
+      req.flash('error', 'user already exists with this email');
+    }
     const user = new User({ email, username, phone })  // this is the feature of passportjs it doesnot need schema for password and username
-    await User.register(user, password)
-    res.redirect('/home');
+    const registereduser = await User.register(user, password)
+    req.login(registereduser, err => {
+      if (err) return next(err)
+      else {
+        req.flash('success', `${username}, welcome to Smart Campus Control`);
+        res.redirect('/home')
+      }
+    })
   }
-  catch (err) {
-    console.log(err);
-    res.status(500).json({ error: 'Internal Server Error' });
+  catch (e) {
+req.flash('error', 'user already exists with this credentials');
+    res.redirect('register');
   }
-}
+
+});
 const logout = (req, res, next) => {
   // res.clearCookie('token'); // clears cookie named 'token'-----> this method is for jwt
   req.logout(function (err) {
-    if (err) return next(err)
-    res.send("loggedout successfully")
+    if (err) {
+      return next(err);
+    }
+    req.flash('success', 'Logged out successfully');
+    res.redirect("/home")
   })
 
 };
 const RenderStudentForm = (req, res) => {
+  req.flash('error', 'user not registered')
   res.render('student/new')
 }
 

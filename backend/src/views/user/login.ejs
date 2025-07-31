@@ -8,15 +8,21 @@
                     alt="" class="card-img-top" />
                 <div class="card-body">
                     <h5 class="card-title">Login</h5>
-                    <form action="/login" method="POST" class="validated-form" novalidate>
+                    <form action="/login" method="POST" class="needs-validation" novalidate>
                         <div class="mb-3">
-                            <label class="form-label" for="username">Full Name</label>
-                            <input class="form-control" type="text" id="username" name="username" autofocus required>
+                            <label class="form-label" for="email">Enter your email</label>
+                            <input class="form-control" type="email" id="email" name="email" autofocus required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
-
+                        <!-- <div class="mb-3">
+                            <label class="form-label" for="username">Enter your username</label>
+                            <input class="form-control" type="text" id="username" name="username" autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div> -->
                         <div class="mb-3">
                             <label class="form-label" for="password">Password</label>
                             <input class="form-control" type="password" id="password" name="password" required>

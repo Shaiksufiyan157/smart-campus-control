@@ -62,11 +62,19 @@ This platform helps reduce study barriers, encourages collaboration, and promote
 git clone <your_repo_url>
 cd smart-campus-control
 
+<<<<<<< HEAD
 Install Dependencies
+=======
+## Install Dependencies
+>>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
 npm install
 
 Configure Environment Variables 🔑
 Create a .env file in the root directory with the following variables:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
 MONGODB_URI=your_mongo_db_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
@@ -76,7 +84,10 @@ PORT=3000
 
 Start the Application 🚀
 npm run dev
+<<<<<<< HEAD
 Open http://localhost:3000 in your browser.
+=======
+>>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
 
 Usage 📖
 After registration/login, users can upload question papers and subject notes easily.
@@ -103,4 +114,8 @@ Contributions are welcome! To contribute:
 Please ensure your code follows existing style conventions and is well-documented.
 
 Credits 👏
+<<<<<<< HEAD
 Developed by Shaik Sufiyan
+=======
+Developed by [Your Name or Team]
+>>>>>>> 567db0884e6adf1b4aad048a196fc17f9073577a
