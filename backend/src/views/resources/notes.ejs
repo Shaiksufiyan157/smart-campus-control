@@ -1,20 +1,6 @@
 <%-layout("layout/boilerplate.ejs")%>
-    <section class="notes-section">
-
-        <div class="notes-container">
-            <div class="notes-heading">
-                <h1>SUBJECT NOTES</h1>
-            </div>
-            <div id="contributor-tocontribute">
-                <div id="contributor">
-                    The below notes are shared by the students
-                </div>
-                <div class="want-to-contribute">
-                    To become a contributor please click the below button
-                    <a href="/addnotes"><button class="contribute-btn">contribute</button></a>
-                </div>
-            </div>
-            <form action="/notes" class="filter-form" novalidate method="post">
+    <!-- <section class="notes-section"> -->
+            <!-- <form action="/notes" class="filter-form" novalidate method="post">
                 <div class="filter-form">
                     <label for="subject">Subject</label>
                     <select name="subject" id="subject">
@@ -49,35 +35,123 @@
                     </select>
                 </div>
                 <button type="submit" class="filter-btn btn btn-primary">Apply</button>
-            </form>
+            </form> -->
+<!-- 
+        </div> -->
 
-            <div class="notes rounded float-left">
-                <div class="d-flex flex-wrap gap-4">
-                    <% for(let note of notes){ %>
+    <!-- </section> -->
 
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%=note.subject %>
-                                </h5>
-                                <p class="card-text">
-                                 subject code-<%=note.subcode %>
+    <section class="py-5">
+        <div class="container">
+            <!-- Header -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h1 class="display-4 fw-bold text-center mb-4">SUBJECT NOTES</h1>
+                </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="card-text text-primary mb-0 fs-5">
+                                    The below notes are shared by the students
                                 </p>
-                                <p class="card-text">
-                                 semester-<%=note.semester %>
-                                </p>
-                                <p class="card-text">
-                                   module- <%=note.module %>
-                                </p>
-                                <a href="<%=note.image.url %>" target="_blank" class="btn btn-primary">Download</a>
                             </div>
                         </div>
-                        <% } %>
+                    </div>
                 </div>
 
+                <div class="col-md-6">
+                    <div class="card border-success h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-plus-circle fa-2x text-success"></i>
+                                </div>
+                                <div>
+                                    <p class="card-text text-success mb-0 fs-5">
+                                        To become a contributor please click the below button
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <a href="/addnotes"> <button class="btn btn-outline-success">
+                                        <i class="fas fa-upload me-2"></i>Contribute
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
+            <!-- Subject Notes Cards -->
+            <div class="row g-4">
+<% for(let note of notes){ %>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-book me-2"></i><%=note.subject %>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h6 class="text-muted mb-2">
+                                    <i class="fas fa-code me-2"></i>Subject Details
+                                </h6>
+                                <p class="mb-1"><strong>Subject Code:</strong><%=note.subcode %></p>
+                                <p class="mb-1"><strong>Semester:</strong><%=note.semester %></p>
+                                <p class="mb-0"><strong>Module:</strong><%=note.module %></p>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light">
+                           <a href="<%=note.image.url %>" target="_blank"> <button class="btn btn-primary w-100">
+                                <i class="fas fa-download me-2"></i>Download
+                            </button></a>
+                        </div>
+                    </div>
+                </div>
+<% } %>
+            </div>
+
+            <!-- Statistics Row -->
+            <!-- <div class="row mt-5">
+                <div class="col-12">
+                    <div class="bg-light rounded p-4">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-file-alt fa-2x text-primary mb-2"></i>
+                                    <h4 class="text-primary mb-0">2+</h4>
+                                    <p class="text-muted mb-0">Notes Available</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-users fa-2x text-success mb-2"></i>
+                                    <h4 class="text-success mb-0">Active</h4>
+                                    <p class="text-muted mb-0">Contributors</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-download fa-2x text-warning mb-2"></i>
+                                    <h4 class="text-warning mb-0">Growing</h4>
+                                    <p class="text-muted mb-0">Downloads</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
     </section>
 
 
@@ -96,4 +170,4 @@
 
 
 
-<!-- ---------------------------------------  -->
+    <!-- ---------------------------------------  -->

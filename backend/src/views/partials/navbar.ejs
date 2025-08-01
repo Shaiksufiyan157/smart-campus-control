@@ -1,22 +1,40 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand .text-primary" href="/home">Smart Campus Control</a>
+    <a class="navbar-brand text-primary" href="/home">Smart Campus Control</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
+      <div class="navbar-nav me-auto mb-2 mb-lg-0">
         <a class="nav-link active" aria-current="page" href="/home">Home</a>
         <a class="nav-link" href="/result">Result</a>
         <a class="nav-link" href="/about">About</a>
-   <% if(!currentUser) { %>
-        <a class="nav-link" href="/login">Login</a>
-        <a class="nav-link" href="/register">Register</a>
-   <% } else { %>
-        <a class="nav-link" href="/logout">Logout</a>
-   <% } %>
-
+      </div>
+      <div class="d-flex align-items-center">
+        <% if (!currentUser) { %>
+          <a class="nav-link me-3" href="/login" id="loginBtn">Login</a>
+          <a class="nav-link me-3" href="/register" id="registerBtn">Register</a>
+        <% } else { %>
+          <span class="nav-link me-3" id="username" style="font-weight: bold; color: #0d6efd;"> <%= currentUser.username %></span>
+<a class="nav-link me-3" href="/logout" id="logoutBtn" style="background-color: #dd4c58; color: #FF0000; font-weight: bold; border-radius: 5px; padding: 8px 16px;">Logout</a>        <% } %>
       </div>
     </div>
   </div>
 </nav>
+
+<!-- Add custom styles for active links -->
+<style>
+  .navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: #0d6efd !important;
+  }
+
+  #loginBtn, #logoutBtn, #registerBtn {
+    color: #0d6efd !important;
+    font-weight: bold;
+  }
+
+  #loginBtn:hover, #logoutBtn:hover, #registerBtn:hover {
+    color: #0056b3 !important;
+  }
+</style>
