@@ -101,8 +101,19 @@ res.render('notfound.ejs')
 })
 
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
+const ConnectServer=async()=>{
+try{
+    await connectDB()
+    app.listen(PORT, () => {
     console.log("serving on port: " + PORT)
-    connectDB()
+    
 })
+}catch(e){
+    console.error("error occured",e)
+    process.exit(1)
+}
+}
+
+ConnectServer()
+
 // export default serverless(app);
