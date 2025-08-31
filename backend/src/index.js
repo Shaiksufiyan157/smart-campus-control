@@ -47,14 +47,21 @@ app.use(bodyParser.json());
 //     },
 //     collectionName: 'session'
 // });
+const mongoURI = process.env.DB_URI || 'mongodb://localhost:27017/mySessionsDB';
 
+// Create a MongoDB session store
+const store = MongoDBStore.create({
+  mongoUrl: mongoURI,    // use mongoUrl, not uri
+  collectionName: 'sessions',
+});
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',
     resave: false,
-    saveUninitialized: true,
+    store,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
