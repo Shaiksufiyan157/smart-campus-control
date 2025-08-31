@@ -20,7 +20,6 @@ import dotenv from 'dotenv'
 import ContributeRouter from './routes/contribute.route.js'
 import bodyParser from "body-parser"
 import flash from "connect-flash"
-import serverless from 'serverless-http';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -100,6 +99,7 @@ app.use('/',resultRoute);
 app.use((req,res)=>{
 res.render('notfound.ejs')
 })
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log("serving on port: " + PORT)

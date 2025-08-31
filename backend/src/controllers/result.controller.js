@@ -23,6 +23,8 @@ res.send("added succesfully")
 const renderSearch=(req,res)=>{
 res.render('result/searchResult.ejs');
 }
+
+
 const findResult=async (req,res)=>{
 const {usn}=req.body;
 console.log(usn)
