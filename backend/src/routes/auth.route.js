@@ -25,3 +25,4 @@ router.route('/logout')
     .get(authController.logout)
 
 export default router;
+
