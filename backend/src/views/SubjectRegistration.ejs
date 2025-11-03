@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration - Synapse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .course-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .course-card-mandatory {
+            background-color: #f8f9fa;
+            cursor: default;
+        }
+        .course-card-mandatory:hover {
+            transform: none;
+        }
+        .radio-card {
+            position: relative;
+        }
+        .radio-card input[type="radio"] {
+            width: 24px;
+            height: 24px;
+        }
+        .radio-card input[type="radio"]:checked ~ .card {
+            border-color: #0d6efd;
+            background-color: #e7f3ff;
+        }
+        .checkmark-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            border-bottom: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Header -->
+    <header class="sticky-header py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0 text-primary fw-bold">Synapse</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="mb-4">
+            <h2 class="display-6 fw-bold text-dark mb-2">Course Registration</h2>
+            <p class="text-muted">Select your elective courses for the semester</p>
+        </div>
+
+        <form action="/register-courses" method="POST">
+            <!-- Core Subjects -->
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <svg class="text-danger" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <h3 class="h5 mb-0 fw-bold">Core Subjects</h3>
+                    <span class="badge bg-secondary">All Mandatory</span>
+                </div>
+                <div class="row g-3">
+                    <!-- Sample Core Subject Card - Replace with EJS loop -->
+                    <div class="col-md-6">
+                        <div class="card course-card course-card-mandatory border-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <h5 class="card-title mb-0 fw-semibold">Data Structures and Algorithms</h5>
+                                            <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                                        </div>
+                                        <p class="card-text text-muted mb-1 small">Code: CS301</p>
+                                        <p class="card-text text-muted mb-0 small">Credits: 4</p>
+                                    </div>
+                                    <div class="checkmark-icon">
+                                        <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <!-- <polyline points="20 6 9 17 4 12"></polyline> -->
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card course-card course-card-mandatory border-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <h5 class="card-title mb-0 fw-semibold">Database Management Systems</h5>
+                                            <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                                        </div>
+                                        <p class="card-text text-muted mb-1 small">Code: CS302</p>
+                                        <p class="card-text text-muted mb-0 small">Credits: 4</p>
+                                    </div>
+                                    <div class="checkmark-icon">
+                                        <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card course-card course-card-mandatory border-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <h5 class="card-title mb-0 fw-semibold">Operating Systems</h5>
+                                            <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                                        </div>
+                                        <p class="card-text text-muted mb-1 small">Code: CS303</p>
+                                        <p class="card-text text-muted mb-0 small">Credits: 3</p>
+                                    </div>
+                                    <div class="checkmark-icon">
+                                        <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card course-card course-card-mandatory border-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <h5 class="card-title mb-0 fw-semibold">Computer Networks</h5>
+                                            <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                                        </div>
+                                        <p class="card-text text-muted mb-1 small">Code: CS304</p>
+                                        <p class="card-text text-muted mb-0 small">Credits: 3</p>
+                                    </div>
+                                    <div class="checkmark-icon">
+                                        <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Professional Electives -->
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <svg class="text-primary" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                    <h3 class="h5 mb-0 fw-bold">Professional Electives</h3>
+                    <span class="badge bg-primary">Select 1 subject</span>
+                </div>
+                <div class="row g-3">
+                    <!-- Sample Professional Elective - Replace with EJS loop -->
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="professional" value="PE301" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Machine Learning</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: PE301</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 3</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="professional" value="PE302" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Cloud Computing</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: PE302</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 3</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="professional" value="PE303" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Cybersecurity</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: PE303</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 3</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="professional" value="PE304" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Mobile App Development</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: PE304</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 3</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Open Electives -->
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <svg class="text-warning" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <h3 class="h5 mb-0 fw-bold">Open Electives</h3>
+                    <span class="badge bg-warning text-dark">Select 1 subject</span>
+                </div>
+                <div class="row g-3">
+                    <!-- Sample Open Elective - Replace with EJS loop -->
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="open" value="OE301" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Digital Marketing</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: OE301</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 2</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="open" value="OE302" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Entrepreneurship</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: OE302</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 2</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="open" value="OE303" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Financial Management</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: OE303</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 2</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="radio-card w-100">
+                            <input type="radio" name="open" value="OE304" class="position-absolute opacity-0">
+                            <div class="card course-card border-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-2 fw-semibold">Technical Writing</h5>
+                                            <p class="card-text text-muted mb-1 small">Code: OE304</p>
+                                            <p class="card-text text-muted mb-0 small">Credits: 2</p>
+                                        </div>
+                                        <div class="form-check-input mt-0" style="width: 24px; height: 24px; margin-left: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary btn-lg px-5">
+                    Register Courses
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-3 mt-5">
+        <div class="container text-center">
+            <small>Developed by Shaik Sufiyan, Yahiya Ateeb, Afraaz Ahmed</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
