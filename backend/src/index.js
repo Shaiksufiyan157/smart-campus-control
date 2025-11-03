@@ -2,6 +2,7 @@ import express from "express"
 import authRouter from './routes/auth.route.js'
 import StudentRouter from './routes/student.route.js'
 import resultRoute from './routes/result.route.js'
+import SubjectRegisterRoute from './routes/SubjectRegistration.js'
 import { connectDB } from "./lib/db.js"
 import ejs from "ejs"
 import ejsMate from "ejs-mate"
@@ -97,6 +98,7 @@ app.use((req, res, next) => {
 app.use('/', authRouter)
 app.use('/', StudentRouter)
 app.use('/',ResourceRouter)
+app.use('/',SubjectRegisterRoute)
 app.get('/', (req, res) => {
     res.render('home.ejs')
 })
