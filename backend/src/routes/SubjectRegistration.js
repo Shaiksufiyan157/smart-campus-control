@@ -1,6 +1,8 @@
 import express from "express"
 import SubjectsData from "../seed/subjectData.js"
 import Subject from "../models/subject.model.js"
+import User from "../models/user.model.js"
+
 const cources = [
   {
     "courseCode": "22CG72",
@@ -33,6 +35,20 @@ const cources = [
 ]
 const route = express.Router()
 
+route.get('/my-subs',async(req,res)=>{
+// C:\Users\shaik\Desktop\smart campus control\backend\src\views\RegisteredSubjects.ejs
+  // const user=req.user
+  const user=await User.findById(req.user.id).populate('registeredSubjects')
+  // res.json(user)
+   const CoreSubjects = await user.registeredSubjects.filter(sub => sub.category === "CORE");
+  const OpenElective = await user.registeredSubjects.find(sub => sub.category === "OPEN_ELECTIVE");
+  const ProfessionElective = await user.registeredSubjects.find(sub => sub.category === "PROFESSIONAL_ELECTIVE");
+  // res.json({CoreSubjects,OpenElective,ProfessionElective})
+  res.render("RegisteredSubjects.ejs",{CoreSubjects,OpenElective,ProfessionElective})
+
+
+})
+
 route.get('/subject-registration', async (req, res) => {
   //  try {
   //     // Example: SubjectsData is available and contains subject objects
@@ -50,6 +66,12 @@ route.get('/subject-registration', async (req, res) => {
   //   OpenElectives:OpenElectives,
   //   ProfessionElectives:ProfessionElectives
   // })
+   const {_id}=req.user;
+ 
+  const user = await User.findById(_id).populate('registeredSubjects');
+  console.log(user)
+const allsubs=user.registeredSubjects
+  console.log(allsubs)
   const CoreSubjects = await Subject.find({ category: "CORE" });
   const OpenElectives = await Subject.find({ category: 'OPEN_ELECTIVE' })
   const ProfessionElectives = await Subject.find({ category: 'PROFESSIONAL_ELECTIVE' })
@@ -61,23 +83,22 @@ route.get('/subject-registration', async (req, res) => {
 route.post('/subject-registration', async (req, res) => {
   const { professional, open } = req.body;
   const CoreSubjects = await Subject.find({ category: "CORE" });
-  const OpenElective = await Subject.find({ code: open })
-  const ProfessionElective = await Subject.find({ code: professional })
-  const user=req.user;
-  console.log(user)
-//   user.registeredSubjects = CoreSubjects.map(subject => subject._id);
+  const OpenElective = await Subject.findOne({ code: open })
+  const ProfessionElective = await Subject.findOne({ code: professional })
+  const {_id}=req.user;
+ 
+  const user = await User.findById(_id); 
+  user.registeredSubjects = CoreSubjects.map(subject => subject._id);
 
-// if (OpenElective) user.registeredSubjects.push(OpenElective._id);
-// if (ProfessionElective) user.registeredSubjects.push(ProfessionElective._id);
-// await user.save()
-await user.updateOne({ _id: req.user._id }, { $set: { registeredSubjects: [] } });
-
- console.log(user)
-  res.json({
-    CoreSubjects: CoreSubjects,
-    OpenElective: OpenElective,
-    ProfessionElective: ProfessionElective
-  })
+if (OpenElective) user.registeredSubjects.push(OpenElective._id);
+if (ProfessionElective) user.registeredSubjects.push(ProfessionElective._id);
+await user.save()
+if (user.registeredSubjects && user.registeredSubjects.length > 0) {
+  req.session.isRegistered = true;
+} else {
+  req.session.isRegistered = false;
+}
+res.redirect('/home')
 })
 
 

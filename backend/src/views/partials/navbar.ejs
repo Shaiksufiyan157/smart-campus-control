@@ -11,7 +11,14 @@
         <a class="nav-link" href="/about">About</a>
         <a class="nav-link" href="notes">Notes</a>
         <a class="nav-link" href="pyqs">PYQS</a>
-        <a class="nav-link" href="/subject-registration">Subject Register</a>
+        <% if(currentUser) {%>
+        <% if(!isRegistered){ %>
+          <a class="nav-link" href="/subject-registration">Subject Register</a>
+          <% }else { %>
+           <a class="nav-link" href="/my-subs">My subs</a>
+           <% }
+          } %>
+
       </div>
       <div class="d-flex align-items-center">
         <% if (!currentUser) { %>

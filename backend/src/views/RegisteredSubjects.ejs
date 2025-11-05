@@ -1,0 +1,126 @@
+<%-layout('layout/boilerplate.ejs')%>
+<body class="bg-light">
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="mb-4">
+            <h2 class="display-6 fw-bold text-dark mb-2">Your Registered Subjects</h2>
+           
+        </div>
+
+            <!-- Core Subjects -->
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <svg class="text-danger" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <h3 class="h5 mb-0 fw-bold">Core Subjects</h3>
+                    
+                </div>
+           <div class="row g-3">
+    <% CoreSubjects.forEach(subject => { %>
+        <div class="col-md-6">
+            <div class="card course-card course-card-mandatory border-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <h5 class="card-title mb-0 fw-semibold"><%= subject.name %></h5>
+                                <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                            </div>
+                            <p class="card-text text-muted mb-1 small">Code: <%= subject.code %></p>
+                            <p class="card-text text-muted mb-0 small">Credits: <%= subject.credits %></p>
+                        </div>
+                        <div class="checkmark-icon">
+                            <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+            </section>
+
+            <!-- Professional Electives -->
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <svg class="text-primary" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                    <h3 class="h5 mb-0 fw-bold">Professional Electives</h3>
+                    
+                </div>
+                <div class="row g-3">
+<div class="row g-3">
+  
+        <div class="col-md-6">
+            <div class="card course-card course-card-mandatory border-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <h5 class="card-title mb-0 fw-semibold"><%= ProfessionElective.name %></h5>
+                                <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                            </div>
+                            <p class="card-text text-muted mb-1 small">Code: <%= ProfessionElective.code %></p>
+                            <p class="card-text text-muted mb-0 small">Credits: <%= ProfessionElective.credits %></p>
+                        </div>
+                        <div class="checkmark-icon">
+                            <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+            </section>
+
+            <!-- Open Electives -->
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <svg class="text-warning" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <h3 class="h5 mb-0 fw-bold">Open Electives</h3>
+                   
+                </div>
+<div class="row g-3">
+    
+        <div class="col-md-6">
+            <div class="card course-card course-card-mandatory border-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <h5 class="card-title mb-0 fw-semibold"><%= OpenElective.name %></h5>
+                                <span class="badge bg-danger-subtle text-danger">Mandatory</span>
+                            </div>
+                            <p class="card-text text-muted mb-1 small">Code: <%= OpenElective.code %></p>
+                            <p class="card-text text-muted mb-0 small">Credits: <%= OpenElective.credits %></p>
+                        </div>
+                        <div class="checkmark-icon">
+                            <svg width="16" height="16" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+            </section>
+
+       
+    </div>
+
