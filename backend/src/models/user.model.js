@@ -16,13 +16,11 @@ username:{
         required: true,
         unique: true,
     },
-    phone: {
-        type: String,
-        required: true,
-        unique: true,
-        minlength: 10,
-        maxlength: 10,
-    },
+  
+    registeredSubjects: [{
+  type: Schema.Types.ObjectId,
+  ref: "Subject"
+}]
 },
     { timestamps: true }
 )

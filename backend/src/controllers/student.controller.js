@@ -15,7 +15,6 @@ const navController = {
     renderHome,
     renderAcademic,
     renderAbout,
-
 }
 
 export default navController;

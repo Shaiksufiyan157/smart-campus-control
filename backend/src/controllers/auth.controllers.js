@@ -19,6 +19,13 @@ const login = async (req, res) => {
   const user = await User.findOne({ email });
   const redirectUrl = res.locals.returnTo || '/home';
   delete req.session.returnTo
+
+
+if (user.registeredSubjects && user.registeredSubjects.length > 0) {
+  req.session.isRegistered = true;
+} else {
+  req.session.isRegistered = false;
+}
   req.flash('success', `Welome back ${user.username}`);
   res.redirect(redirectUrl);
 };

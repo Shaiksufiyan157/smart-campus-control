@@ -1,0 +1,20 @@
+<%-layout("layout/boilerplate.ejs")%>
+<body class="bg-light py-5">
+  <div class="container">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-primary">Student Result</h3>
+        <p><strong>Name:</strong> <%= student.name %></p>
+        <p><strong>USN:</strong> <%= student.usn %></p>
+
+        <h5 class="mt-4">Subjects & Marks</h5>
+        <ul class="list-group">
+<% student.subjects.forEach(function(subject){ %>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><%=subject.name%></span><span class="fw-bold"><%=subject.marks %></span>
+<% }) %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
