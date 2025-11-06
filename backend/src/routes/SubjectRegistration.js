@@ -81,7 +81,8 @@ const allsubs=user.registeredSubjects
 })
 
 route.post('/subject-registration', async (req, res) => {
-  const { professional, open } = req.body;
+ try{
+   const { professional, open } = req.body;
   const CoreSubjects = await Subject.find({ category: "CORE" });
   const OpenElective = await Subject.findOne({ code: open })
   const ProfessionElective = await Subject.findOne({ code: professional })
@@ -98,6 +99,11 @@ if (user.registeredSubjects && user.registeredSubjects.length > 0) {
 } else {
   req.session.isRegistered = false;
 }
+req.flash('success','Subjects registered successfully!');
+ }
+ catch(e){
+  req.flash('error','Failed to register subjects. Please try again.');
+ }
 res.redirect('/home')
 })
 
