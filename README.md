@@ -17,7 +17,7 @@ A collaborative platform for college students to share, find, and access subject
 ---
 
 ## Project Description 💡
-**Smart Campus Control** serves as a central hub where students can:
+**Synapse ** serves as a central hub where students can:
 
 - 📄 Upload and share previous year question papers and subject notes.
 - 🔍 Browse and download materials organized by subject, college, and academic year.
@@ -79,7 +79,7 @@ Please ensure your code follows existing style conventions and is well-documente
 
 ## Credits 👏
 
-Developed by Shaik Sufiyan
+Developed by Shaik Sufiyan ,Mohammed Afraaz Ahmed
 
 ## Installation ⚙️
 
