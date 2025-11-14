@@ -3,6 +3,7 @@ import authRouter from './routes/auth.route.js'
 import StudentRouter from './routes/student.route.js'
 import resultRoute from './routes/result.route.js'
 import SubjectRegisterRoute from './routes/SubjectRegistration.js'
+import FacultyInfoRoute from './routes/faculty.route.js'
 import GenerateQRRoute from './routes/GenerateQR.js'
 import { connectDB } from "./lib/db.js"
 import ejs from "ejs"
@@ -102,6 +103,7 @@ app.use('/', StudentRouter)
 app.use('/',ResourceRouter)
 app.use('/',SubjectRegisterRoute)
 app.use('/',GenerateQRRoute)
+app.use('/',FacultyInfoRoute)
 app.get('/', (req, res) => {
     res.render('home.ejs')
 })

@@ -59,7 +59,41 @@
             background-color: white;
             border-bottom: 1px solid #dee2e6;
         }
+        .card {
+            /* Add a subtle shadow and border */
+            border: 1px solid #e9ecef;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .card:hover {
+            /* Add a slightly stronger shadow and lift on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .qualification-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .list-group-item {
+            padding-left: 0;
+            padding-right: 0;
+            border-color: #f1f3f5;
+        }
     </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column vh-100">
