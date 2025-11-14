@@ -1,0 +1,42 @@
+import express from "express";
+import QRCode from "qrcode";
+import ResultSchema from "../models/result.model.js";
+import { v2 as cloudinary } from 'cloudinary';
+const router=express.Router();
+import dotenv from "dotenv";
+dotenv.config();
+
+router.get('/generate-qr',async(req,res)=>{
+//   res.render('GenerateQR.ejs')
+try {
+    const student = await ResultSchema.findOne({ usn: '1AI21CS001' });
+    if (!student) return res.status(404).send('Student not found');
+   const url = `http://${process.env.HOST}/student/${student.usn}`;
+    const qrCodeDataUrl = await QRCode.toDataURL(url);
+    const base64Str = qrCodeDataUrl.replace(/^data:image\/png;base64,/, "");
+    // res.send(`<img src="${qrCodeDataUrl}" alt="QR Code" />`);
+    const uploadResponse = await cloudinary.uploader.upload(`data:image/png;base64,${base64Str}`, {
+      folder: 'student_qrcodes',
+      public_id: student.usn, // optional: name the file with student USN
+      overwrite: true
+    });
+
+    // Save the Cloudinary URL in student_qr field
+    student.student_qr = uploadResponse.secure_url;
+    await student.save();
+    res.redirect(`/student/${student.usn}`);
+  } catch (error) {
+    res.status(500).send('Error generating QR code');
+  }
+})
+router.get('/student/:id', async (req, res) => {
+    const usn = req.params.id;
+    try {
+        const student = await ResultSchema.findOne({ usn: usn });   
+        if (!student) return res.status(404).send('Student not found');
+        res.render('student/StudentInfo.ejs', { student });
+    } catch (error) {
+        res.status(500).send('Error fetching student data');
+    }
+})
+export default router;

@@ -1,0 +1,31 @@
+<%- layout('layout/boilerplate.ejs')  %>
+<%- layout('layout/boilerplate.ejs') %>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Student Details</h1>
+    <div class="card mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        <h5 class="card-title" id="name"><%= student.name %></h5>
+        <h6 class="card-subtitle mb-3 text-muted" id="usn"><%= student.usn %></h6>
+
+        <h6>Marks:</h6>
+        <ul class="list-group mb-4" id="marks">
+          <% student.subjects.forEach(subject => { %>
+            <li class="list-group-item">
+              <strong><%= subject.name %>:</strong> <%= subject.marks %>
+            </li>
+          <% }) %>
+        </ul>
+
+        <div class="text-center">
+          <label for="qrCodeImg" class="form-label">QR Code:</label>
+          <img
+            id="qrCodeImg"
+            src="<%= student.student_qr %>"
+            alt="QR Code"
+            class="img-fluid border p-2 rounded"
+            style="max-width: 250px;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
