@@ -10,7 +10,8 @@ const subjectSchema = new Schema({
 const resultSchema = new Schema({
   name: { type: String, required: true },
   usn: { type: String, required: true, unique: true },
-  subjects: [subjectSchema]
+  subjects: [subjectSchema],
+  student_qr: { type: String}
 });
 
 const Result = mongoose.model('Result', resultSchema);
