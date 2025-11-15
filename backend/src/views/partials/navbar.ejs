@@ -1,50 +1,64 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand text-primary" href="/home">Synapse</a>
+
+<!-- -------------------------------------------------------- -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <!-- 
+    Changed to "container" for better margins on desktop. 
+    It will still be full-width on mobile.
+  -->
+  <div class="container">
+    <!-- Added fw-bold for a stronger brand identity -->
+    <a class="navbar-brand text-primary fw-bold" href="/home">Synapse</a>
+    
+    <!-- Standard mobile toggler -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <!-- Left side nav links -->
       <div class="navbar-nav me-auto mb-2 mb-lg-0">
         <a class="nav-link active" aria-current="page" href="/home">Home</a>
         <a class="nav-link" href="/result">Result</a>
         <a class="nav-link" href="/about">About</a>
         <a class="nav-link" href="notes">Notes</a>
         <a class="nav-link" href="pyqs">PYQS</a>
+        
+        <!-- EJS logic is unchanged -->
         <% if(currentUser) {%>
-        <% if(!isRegistered){ %>
-          <a class="nav-link" href="/subject-registration">Register Subject</a>
+          <% if(!isRegistered){ %>
+            <a class="nav-link" href="/subject-registration">Register Subject</a>
           <% }else { %>
-           <a class="nav-link" href="/my-subs">My Subjects</a>
-           <% }
-          } %>
-          <a href="/generate-qr" class="nav-link">Generate QR Code</a>
+            <a class="nav-link" href="/my-subs">My Subjects</a>
+          <% }
+        } %>
+        <a href="/generate-qr" class="nav-link">Generate QR Code</a>
+        <a href="/faculty" class="nav-link">Faculty info</a>
       </div>
+      
+      <!-- Right side auth links -->
       <div class="d-flex align-items-center">
+        <!-- EJS logic is unchanged -->
         <% if (!currentUser) { %>
-          <a class="nav-link me-3" href="/login" id="loginBtn">Login</a>
-          <a class="nav-link me-3" href="/register" id="registerBtn">Register</a>
+          <!-- 
+            Replaced custom-styled links with Bootstrap buttons.
+            They look better and are more consistent.
+          -->
+          <a class="btn btn-outline-primary btn-sm me-2" href="/login">Login</a>
+          <a class="btn btn-primary btn-sm" href="/register">Register</a>
+        
         <% } else { %>
-          <span class="nav-link me-3" id="username" style="font-weight: bold; color: #0d6efd;"> <%= currentUser.username %></span>
-<a class="nav-link me-3" href="/logout" id="logoutBtn" style="background-color: #dd4c58; color: #FF0000; font-weight: bold; border-radius: 5px; padding: 8px 16px;">Logout</a>        <% } %>
+          <!-- 
+            Created a nicer welcome message instead of just the name.
+            Used navbar-text for proper semantic alignment.
+          -->
+          <span class="navbar-text me-3">
+            Welcome, <strong class="text-primary"><%= currentUser.username %></strong>
+          </span>
+          
+          <!-- Replaced the custom-styled link with a Bootstrap button -->
+          <a class="btn btn-outline-danger btn-sm" href="/logout">Logout</a>
+        <% } %>
       </div>
     </div>
   </div>
 </nav>
-
-<!-- Add custom styles for active links -->
-<style>
-  .navbar-nav .nav-link.active {
-    font-weight: bold;
-    color: #0d6efd !important;
-  }
-
-  #loginBtn, #logoutBtn, #registerBtn {
-    color: #0d6efd !important;
-    font-weight: bold;
-  }
-
-  #loginBtn:hover, #logoutBtn:hover, #registerBtn:hover {
-    color: #0056b3 !important;
-  }
-</style>

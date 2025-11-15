@@ -1,0 +1,121 @@
+<% layout('layout/boilerplate.ejs') %>
+ <main class="py-5">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- Main Content Column (Wider) -->
+                <div class="col-lg-8">
+                    
+<div class="card rounded-3 mb-4">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-600">Achievements</h5>
+    </div>
+    <div class="card-body">
+        <!-- Dynamic Data: achievements -->
+        
+        <!-- Replaced 'list-group-flush' with an unstyled list for custom formatting -->
+        <ul class="list-unstyled mb-0">
+            
+            <% for(let achievement of faculty.achievements) { %>
+                
+                <!-- Use d-flex to align icon and text vertically -->
+                <li class="d-flex align-items-start mb-3">
+                    
+                    <!-- 
+                      This icon adds visual flair.
+                      You can change 'bi-award-fill' to 'bi-star-fill' or 'bi-patch-check-fill'
+                    -->
+                    <i class="bi bi-award-fill text-primary me-3 fs-5" style="padding-top: 2px;"></i>
+                    
+                    <!-- The achievement text -->
+                    <span><%= achievement %></span>
+                </li>
+
+            <% } %>
+
+             <!-- Add a helpful message if there are no achievements -->
+             <% if(faculty.achievements.length === 0) { %>
+                <li class="text-muted">
+                    No achievements listed yet.
+                </li>
+            <% } %>
+
+        </ul>
+    </div>
+</div>
+                    <!-- Published Papers Card -->
+                     <% if(faculty.paper_published.length>0) {%>
+                    <div class="card rounded-3">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 fw-600">Published Papers</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic Data: paper_published -->
+                            <ul class="list-group list-group-flush">
+                                <% for(let paper of faculty.published_papers) { %>
+                                <li class="list-group-item px-0"><%= paper %></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <% } %>
+
+                </div>
+
+                <!-- Sidebar Column (Narrower) -->
+                <div class="col-lg-4">
+                    
+                    <!-- Contact & Info Card -->
+                    <div class="card rounded-3 sidebar-card">
+                        <div class="card-body">
+                            <h5 class="card-title fw-600 mb-3">Contact & Info</h5>
+                            <!-- Dynamic Data: email -->
+                            <p class="mb-2">
+                                <i class="bi bi-envelope-fill text-muted me-2"></i>
+                                <%= faculty.email %>
+                            </p>
+                            <!-- Dynamic Data: facultyId -->
+                            <p class="mb-0">
+                                <i class="bi bi-person-badge-fill text-muted me-2"></i>
+                                Faculty ID: <%= faculty.facultyId %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Qualifications Card -->
+                    <div class="card rounded-3 mt-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 fw-600">Qualifications</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic Data: qualification -->
+                            <ul class="list-unstyled">
+                                <% for(let qual of faculty.qualification) { %>
+                                <li class="mb-3">
+                                    <strong class="d-block"><%= qual.degree %></strong>
+                                    <small class="text-muted"><%= qual.institution %> (<%= qual.year_of_passing %>) - <%= qual.grade %></small>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Subjects Taught Card -->
+                    <div class="card rounded-3 mt-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 fw-600">Subjects Taught</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic Data: subjects -->
+                            <div class="d-flex flex-wrap">
+                                <% for(let subject of faculty.subjects) { %>
+                                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill m-1"><%= subject %></span>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
