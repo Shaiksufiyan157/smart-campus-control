@@ -44,21 +44,51 @@
     </div>
 </div>
                     <!-- Published Papers Card -->
-                     <% if(faculty.paper_published.length>0) {%>
-                    <div class="card rounded-3">
-                        <div class="card-header bg-white py-3">
-                            <h5 class="mb-0 fw-600">Published Papers</h5>
-                        </div>
-                        <div class="card-body">
-                            <!-- Dynamic Data: paper_published -->
-                            <ul class="list-group list-group-flush">
-                                <% for(let paper of faculty.published_papers) { %>
-                                <li class="list-group-item px-0"><%= paper %></li>
-                                <% } %>
-                            </ul>
-                        </div>
+                    
+
+                    <div class="card rounded-3 border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-600">Published Papers</h5>
+    </div>
+    <div class="card-body">
+        
+        <% if(faculty.paper_published.length > 0) { %>
+
+            <ul class="list-group list-group-flush">
+                
+                <% for(let paper of faculty.paper_published) { %>
+                
+                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                    
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-file-earmark-text text-primary me-3 fs-4"></i>
+                        
+                      
+                            <%= paper.filename %>
+                      
                     </div>
-                    <% } %>
+
+                   <a href="<%= paper.url %>" target="_blank" class="text-decoration-none fw-bold text-dark">
+                             <i class="bi bi-box-arrow-up-right text-muted"></i>
+                        </a>
+                </li>
+
+                <% } %>
+            
+            </ul>
+
+        <% } else { %>
+            
+            <div class="text-center p-4">
+                <i class="bi bi-journals fs-1 text-muted"></i>
+                <p class="mt-3 mb-0 text-muted">No published papers have been added yet.</p>
+            </div>
+
+        <% } %>
+
+    </div>
+</div>
+             
 
                 </div>
 

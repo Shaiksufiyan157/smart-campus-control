@@ -28,7 +28,10 @@ const FacultySchema = new Schema({
     // experience: {type: Number},
     subjects: [{type: String}],
     achievements: [{type: String}],
-    paper_published: [{type: String}],
+    paper_published: [{
+        url: String,
+        filename:String
+    }],
     qr:String
 });
 

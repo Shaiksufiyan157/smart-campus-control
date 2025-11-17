@@ -70,8 +70,6 @@ const addpdf = async (req, res) => {
 const addpdf2 = async (req, res) => {
     try {
 
-
-
         if (req?.file) {
 
             const filePath = `./uploads/${req.file.originalname}`
