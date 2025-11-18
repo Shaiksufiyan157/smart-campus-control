@@ -32,7 +32,7 @@ const FacultySchema = new Schema({
         url: String,
         filename:String
     }],
-    qr:String
+    faculty_qr:String
 });
 
 const Faculty = mongoose.model('Faculty', FacultySchema);
