@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 router.get('/generate-qr',async(req,res)=>{
-// try {
+try {
   //   const student = await ResultSchema.findOne({ usn: '1AI21CS001' });
   //   if (!student) return res.status(404).send('Student not found');
   //  const url = `http://${process.env.HOST}/student/${student.usn}`;
@@ -29,7 +29,7 @@ router.get('/generate-qr',async(req,res)=>{
 
 
   // for(const faculty of AllFaculty){
-  //   const url = `http://${process.env.HOST}/faculty/${faculty.facultyId}`;
+  //   const url = `http://smart-campus-control.vercel.app/faculty/${faculty.facultyId}`;
   //   const qrCodeDataUrl = await QRCode.toDataURL(url);
   //   const base64Str = qrCodeDataUrl.replace(/^data:image\/png;base64,/, "");
   //   const uploadResponse = await cloudinary.uploader.upload(`data:image/png;base64,${base64Str}`, {
@@ -44,9 +44,9 @@ router.get('/generate-qr',async(req,res)=>{
   // }
   // console.log('QR code generation completed for all faculty members.');
   // res.json({AllFaculty});
-  // } catch (error) {
-  //   res.status(500).send('Error generating QR code');
-  // }
+  } catch (error) {
+    res.status(500).send('Error generating QR code');
+  }
   res.send('QR code generation script executed. Check server logs for details.');
 })
 router.get('/student/:id', async (req, res) => {
