@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const NotesSchema = new Schema({
     subcode: String,
-    image:
+    pdf:
     {
         url: String,
         filename: String

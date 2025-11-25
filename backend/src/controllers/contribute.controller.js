@@ -5,8 +5,8 @@ import path, { format } from "path"
 import { v2 as cloudinary } from 'cloudinary';
 import sharp from "sharp"
 import fs from "fs"
-import { PDFDocument } from "pdf-lib";
-
+import PDFDocument from "pdfkit";
+import { PassThrough } from 'stream';
 
 const renderAddnotes = (req, res) => {
     res.render("contribution/notes.ejs")
@@ -100,51 +100,182 @@ const compressFile = async (existingToBytes, originalname) => {
 
 
 
+// const Addnotes = async (req, res) => {
+//     const Notes = new Note(req.body);
+//     const originalName = path.parse(req.file.originalname).name;
+//     const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+//         public_id: originalName,
+//         overwrite: true,
+//     });
+//     Notes.image = {
+//         url: uploadedImage.secure_url,
+//         filename: uploadedImage.public_id,
+//     };
+
+
+//     // Notes.images = req.files.map(f => ({ url: f.path, filename: f.filename }))--------------------> to upload many images
+//     req.flash('success', 'Notes added successfully');
+
+//     await Notes.save();
+//     res.redirect('/notes');
+// }
 const Addnotes = async (req, res) => {
-    const Notes = new Note(req.body);
-    const originalName = path.parse(req.file.originalname).name;
-    const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
-        public_id: originalName,
-        overwrite: true,
-    });
-    Notes.image = {
-        url: uploadedImage.secure_url,
-        filename: uploadedImage.public_id,
-    };
 
 
-    // Notes.images = req.files.map(f => ({ url: f.path, filename: f.filename }))--------------------> to upload many images
-    req.flash('success', 'Notes added successfully');
+    try {
+        if (!req.files || req.files.length === 0) {
+            req.flash('error', 'No files uploaded');
+            return res.redirect('/notes');
+        }
 
-    await Notes.save();
-    res.redirect('/notes');
-}
-const Addpyqs = async (req, res) => {
-    const Pyqs = new Pyq(req.body)
+        const uploadToCloudinary = (fileStream) => {
+            return new Promise((resolve, reject) => {
+                const cloudStream = cloudinary.uploader.upload_stream(
+                    {
+                        resource_type: 'auto',
+                        folder: 'notes_pdfs',
+                        public_id: `notes-${req.body.subject}`,
+                    },
+                    (error, result) => {
+                        if (error) reject(error);
+                        else resolve(result);
+                    }
+                );
+                fileStream.pipe(cloudStream);
+            });
+        };
 
-try{
-    const originalName = path.parse(req.file.originalname).name;
-    if (req.file.size > 1000000) {
-        req.flash('error', 'upload less than 10 mb or contact admin')
-        res.redirect('/addpyqs')
+        let uploadPromise;
+
+        // SCENARIO 1: The user uploaded a single PDF file
+        // We just pass it through without touching it
+        if (req.files[0].mimetype === 'application/pdf') {
+
+            // Create a stream from the buffer
+            const pdfStream = new PassThrough();
+            pdfStream.end(req.files[0].buffer);
+
+            uploadPromise = uploadToCloudinary(pdfStream);
+
+        }
+        // SCENARIO 2: The user uploaded Images (One or Many)
+        // We use PDFKit to stitch them together
+        else {
+            const doc = new PDFDocument({ autoFirstPage: false });
+
+            // Pipe PDFKit into Cloudinary
+            uploadPromise = uploadToCloudinary(doc);
+
+            // Add images
+            for (const file of req.files) {
+                // Skip if a user accidentally mixes a PDF in with images
+                if (file.mimetype === 'application/pdf') continue;
+
+                const img = doc.openImage(file.buffer);
+                doc.addPage({ size: [img.width, img.height] });
+                doc.image(img, 0, 0);
+            }
+            doc.end();
+        }
+
+        // Wait for upload
+        const uploadedPdf = await uploadPromise;
+
+        // Save to DB
+        const newNote = new Note(req.body);
+        newNote.pdf = {
+            url: uploadedPdf.secure_url,
+            filename: uploadedPdf.public_id,
+        };
+
+        await newNote.save();
+
+        req.flash('success', 'Notes added successfully');
+        res.redirect('/notes');
+
+    } catch (err) {
+        console.error('Error in Addnotes:', err);
+        req.flash('error', 'Something went wrong');
+        res.redirect('/notes');
     }
-    const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
-        public_id: originalName,
-        overwrite: true,
-    });
-    Pyqs.image = {
-        url: uploadedImage.secure_url,
-        filename: uploadedImage.public_id,
-    };
+};
+const Addpyqs = async (req, res) => {
+    try {
+        if (!req.files || req.files.length === 0) {
+            req.flash('error', 'No files uploaded');
+            return res.redirect('/pyq');
+        }
 
-    await Pyqs.save();
-    req.flash('success', 'Pyq added successfully');
-    res.redirect('/pyqs');
-}catch(e){
-req.flash('error',e)
-console.log("error")
-res.redirect('/addpyqs')
-}
+        const uploadToCloudinary = (fileStream) => {
+            return new Promise((resolve, reject) => {
+                const cloudStream = cloudinary.uploader.upload_stream(
+                    {
+                        resource_type: 'auto',
+                        folder: 'pyqs_pdfs',
+                        public_id: `pyq-${req.body.subject}`,
+                    },
+                    (error, result) => {
+                        if (error) reject(error);
+                        else resolve(result);
+                    }
+                );
+                fileStream.pipe(cloudStream);
+            });
+        };
+
+        let uploadPromise;
+
+        // SCENARIO 1: The user uploaded a single PDF file
+        // We just pass it through without touching it
+        if (req.files[0].mimetype === 'application/pdf') {
+
+            // Create a stream from the buffer
+            const pdfStream = new PassThrough();
+            pdfStream.end(req.files[0].buffer);
+
+            uploadPromise = uploadToCloudinary(pdfStream);
+
+        }
+        // SCENARIO 2: The user uploaded Images (One or Many)
+        // We use PDFKit to stitch them together
+        else {
+            const doc = new PDFDocument({ autoFirstPage: false });
+
+            // Pipe PDFKit into Cloudinary
+            uploadPromise = uploadToCloudinary(doc);
+
+            // Add images
+            for (const file of req.files) {
+                // Skip if a user accidentally mixes a PDF in with images
+                if (file.mimetype === 'application/pdf') continue;
+
+                const img = doc.openImage(file.buffer);
+                doc.addPage({ size: [img.width, img.height] });
+                doc.image(img, 0, 0);
+            }
+            doc.end();
+        }
+
+        // Wait for upload
+        const uploadedPdf = await uploadPromise;
+
+        // Save to DB
+        const newPyq = new Pyq(req.body);
+        newPyq.pdf = {
+            url: uploadedPdf.secure_url,
+            filename: uploadedPdf.public_id,
+        };
+
+        await newPyq.save();
+
+        req.flash('success', 'Pyq added successfully');
+        res.redirect('/pyqs');
+
+    } catch (err) {
+        console.error('Error in Addnotes:', err);
+        req.flash('error', 'Something went wrong');
+        res.redirect('/pyqs');
+    }
 }
 
 const renderpdf = (req, res) => {
