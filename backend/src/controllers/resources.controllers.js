@@ -8,6 +8,7 @@ const renderpyq = async (req, res) => {
 }
 const rendernotes = async (req, res) => {
     const notes = await Note.find({})
+    // res.json(notes)
     res.render("resources/notes.ejs", { notes })
 
 }

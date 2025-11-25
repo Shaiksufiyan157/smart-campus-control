@@ -40,7 +40,6 @@
         </div> -->
 
     <!-- </section> -->
-
     <section class="py-5">
         <div class="container">
             <!-- Header -->
@@ -91,6 +90,31 @@
                 </div>
             </div>
 
+
+
+                <% if(!notes || notes.length === 0) { %>
+    <div class="col-12">
+        <div class="card border-0 text-center py-5">
+            <div class="card-body">
+                <div class="mb-4 text-muted opacity-50">
+                    <i class="fas fa-folder-open fa-4x"></i>
+                </div>
+                
+                <h3 class="h4 fw-bold text-secondary">No Notes Found</h3>
+                <p class="text-muted col-md-8 mx-auto">
+                    It looks like there aren't any notes in this category yet. 
+                    Be the first one to help your classmates!
+                </p>
+                
+                <div class="mt-4">
+                    <a href="/addnotes" class="btn btn-primary px-4 py-2 rounded-pill">
+                        <i class="fas fa-plus-circle me-2"></i>Contribute Notes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>
             <!-- Subject Notes Cards -->
             <div class="row g-4">
 <% for(let note of notes){ %>
@@ -112,7 +136,7 @@
                             </div>
                         </div>
                         <div class="card-footer bg-light">
-                           <a href="<%=note.image.url %>" target="_blank"> <button class="btn btn-primary w-100">
+                           <a href="<%=note.pdf.url %>" target="_blank"> <button class="btn btn-primary w-100">
                                 <i class="fas fa-download me-2"></i>Download
                             </button></a>
                         </div>

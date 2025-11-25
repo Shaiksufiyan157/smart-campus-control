@@ -8,7 +8,6 @@ import cloud from '../cloudinary/index.js'
 import sharp from "sharp"
 import { PDFDocument as PDFDocument } from "pdf-lib"
 import path from 'path';
-const upload = multer({ storage:cloud.storage,limits: { fileSize: 10 * 1024 * 1024 }  })
 const router = express.Router()
 import fs from "fs"
 import cathAsync from '../utils/cathAsync.js';
@@ -18,21 +17,25 @@ import middleware from '../middleware.js';
 
 const ilovepdf = new ILovePDFApi(process.env.ILP_PUBLIC_KEY, process.env.ILP_SECRET_KEY);
 
-
+const storage=multer.memoryStorage();
+const upload = multer({
+     storage:storage,
+     limits: { fileSize: 10 * 1024 * 1024 }  
+    });
 
 
 
 
 // ----------------------------->
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "uploads/");
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "uploads/");
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.originalname);
+//     }
+// });
 
 
 const upload2 = multer({ storage })
@@ -88,19 +91,19 @@ const compressFile = async (existingToBytes, originalname) => {
 
 
 const notesUpload = (req, res, next) => {
-  upload.single('notes')(req, res, err => {
+  upload.array('notes')(req, res, err => {
     if (err?.code === 'LIMIT_FILE_SIZE') {
 req.flash('error','file is too large');
-res.redirect('/addnotes')
+return res.redirect('/addnotes')
 }
     next();
   });
 };
 const pyqsUpload = (req, res, next) => {
-  upload.single('pyqs')(req, res, err => {
+  upload.array('pyqs')(req, res, err => {
     if (err?.code === 'LIMIT_FILE_SIZE') {
 req.flash('error','file is too large');
-res.redirect('/addpyqs')
+return res.redirect('/addpyqs')
 }
     next();
   });
