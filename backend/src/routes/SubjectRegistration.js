@@ -2,6 +2,7 @@ import express from "express"
 import SubjectsData from "../seed/subjectData.js"
 import Subject from "../models/subject.model.js"
 import User from "../models/user.model.js"
+import Student from "../models/student.model.js"
 
 const cources = [
   {
@@ -38,7 +39,7 @@ const route = express.Router()
 route.get('/my-subs',async(req,res)=>{
 // C:\Users\shaik\Desktop\smart campus control\backend\src\views\RegisteredSubjects.ejs
   // const user=req.user
-  const user=await User.findById(req.user.id).populate('registeredSubjects')
+  const user=await Student.findById(req.user.id).populate('registeredSubjects')
   // res.json(user)
    const CoreSubjects = await user.registeredSubjects.filter(sub => sub.category === "CORE");
   const OpenElective = await user.registeredSubjects.find(sub => sub.category === "OPEN_ELECTIVE");
@@ -50,33 +51,19 @@ route.get('/my-subs',async(req,res)=>{
 })
 
 route.get('/subject-registration', async (req, res) => {
-  //  try {
-  //     // Example: SubjectsData is available and contains subject objects
-  //     for (const data of SubjectsData) {
-  //         const subject = new Subject(data);
-  //         await subject.save();
-  //     }
-  //     
-  //     console.log('Subjects saved successfully');
-  // } catch (err) {
-  //     console.error('Error saving subjects:', err);
-  //     res.status(500).send('Failed to save subjects');
-  // }
-  // res.json({CoreSubjects:CoreSubjects,
-  //   OpenElectives:OpenElectives,
-  //   ProfessionElectives:ProfessionElectives
-  // })
-   const {_id}=req.user;
- 
-  const user = await User.findById(_id).populate('registeredSubjects');
-  console.log(user)
-const allsubs=user.registeredSubjects
-  console.log(allsubs)
-  const CoreSubjects = await Subject.find({ category: "CORE" });
+   try {
+      // Example: SubjectsData is available and contains subject objects
+      const CoreSubjects = await Subject.find({ category: "CORE" });
   const OpenElectives = await Subject.find({ category: 'OPEN_ELECTIVE' })
   const ProfessionElectives = await Subject.find({ category: 'PROFESSIONAL_ELECTIVE' })
 
   res.render('SubjectRegistration.ejs', { CoreSubjects, OpenElectives, ProfessionElectives });
+      
+      console.log('Subjects saved successfully');
+  } catch (err) {
+      console.error('Error saving subjects:', err);
+      res.status(500).send('Failed to save subjects');
+  }
 
 })
 
@@ -88,7 +75,8 @@ route.post('/subject-registration', async (req, res) => {
   const ProfessionElective = await Subject.findOne({ code: professional })
   const {_id}=req.user;
  
-  const user = await User.findById(_id); 
+  const user = await Student.findById(_id); 
+  // res.json(user)
   user.registeredSubjects = CoreSubjects.map(subject => subject._id);
 
 if (OpenElective) user.registeredSubjects.push(OpenElective._id);

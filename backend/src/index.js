@@ -85,11 +85,11 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy({
-    usernameField: 'email'
-},User.authenticate()))
+    usernameField: 'usn'
+},Student.authenticate()))
 
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
+passport.serializeUser(Student.serializeUser())
+passport.deserializeUser(Student.deserializeUser())
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');

@@ -1,31 +1,83 @@
-<%- layout('layout/boilerplate.ejs')  %>
-<%- layout('layout/boilerplate.ejs') %>
+<% layout('layout/boilerplate.ejs')%>
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Student Details</h1>
-    <div class="card mx-auto" style="max-width: 600px;">
-      <div class="card-body">
-        <h5 class="card-title" id="name"><%= student.name %></h5>
-        <h6 class="card-subtitle mb-3 text-muted" id="usn"><%= student.usn %></h6>
-
-        <h6>Marks:</h6>
-        <ul class="list-group mb-4" id="marks">
-          <% student.subjects.forEach(subject => { %>
-            <li class="list-group-item">
-              <strong><%= subject.name %>:</strong> <%= subject.marks %>
-            </li>
-          <% }) %>
-        </ul>
-
-        <div class="text-center">
-          <label for="qrCodeImg" class="form-label">QR Code:</label>
-          <img
-            id="qrCodeImg"
-            src="<%= student.student_qr %>"
-            alt="QR Code"
-            class="img-fluid border p-2 rounded"
-            style="max-width: 250px;"
-          />
+    <div class="card shadow-sm mb-4 border-0 border-start border-primary border-5">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="mb-1 text-primary"><%= student.name %></h2>
+                    <h5 class="text-muted mb-3"><%= student.usn %></h5>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Department:</strong> <%= student.department %></p>
+                            <p class="mb-1"><strong>Email:</strong> <%= student.email %></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Semester:</strong> <%= result.semester %></p>
+                            <p class="mb-1">
+                                <strong>SGPA:</strong> 
+                                <span class="badge bg-success rounded-pill"><%= result.sgpa %></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 text-center d-none d-md-block">
+                    <div class="p-3 bg-light rounded-circle d-inline-block" style="width: 100px; height: 100px; line-height: 100px;">
+                        <span class="fs-1">🎓</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Semester <%= result.semester %> Results</h5>
+            <span class="badge bg-light text-dark">Credits Earned: <%= result.subjects.reduce((acc, sub) => acc + sub.credits, 0) %></span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0 text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="text-start ps-4">Subject Code</th>
+                            <th scope="col" class="text-start">Subject Name</th>
+                            <th scope="col">Credits</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% result.subjects.forEach(subject => { %>
+                            <tr>
+                                <td class="text-start ps-4 fw-bold"><%= subject.subjectCode %></td>
+                                <td class="text-start"><%= subject.subjectName %></td>
+                                <td><%= subject.credits %></td>
+                                
+                                <td>
+                                    <% if(subject.grade === 'O' || subject.grade === 'A+') { %>
+                                        <span class="fw-bold text-success"><%= subject.grade %></span>
+                                    <% } else if(subject.grade === 'F') { %>
+                                        <span class="fw-bold text-danger"><%= subject.grade %></span>
+                                    <% } else { %>
+                                        <span class="fw-bold text-primary"><%= subject.grade %></span>
+                                    <% } %>
+                                </td>
+
+                                <td>
+                                    <% if(subject.grade !== 'F' && subject.grade !== 'Fail') { %>
+                                        <span class="badge bg-success-subtle text-success border border-success">PASS</span>
+                                    <% } else { %>
+                                        <span class="badge bg-danger-subtle text-danger border border-danger">FAIL</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
