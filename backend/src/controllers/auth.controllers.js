@@ -15,8 +15,8 @@ const renderlogin = (req, res) => {
 
 
 const login = async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
+  const { usn } = req.body;
+  const user = await Student.findOne({ usn });
   const redirectUrl = res.locals.returnTo || '/home';
   delete req.session.returnTo
 
@@ -26,8 +26,9 @@ if (user.registeredSubjects && user.registeredSubjects.length > 0) {
 } else {
   req.session.isRegistered = false;
 }
-  req.flash('success', `Welome back ${user.username}`);
+  req.flash('success', `Welome back ${user.name}`);
   res.redirect(redirectUrl);
+// res.send("hello")
 };
 
 

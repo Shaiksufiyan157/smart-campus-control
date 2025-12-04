@@ -1,64 +1,69 @@
-
-<!-- -------------------------------------------------------- -->
- <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-  <!-- 
-    Changed to "container" for better margins on desktop. 
-    It will still be full-width on mobile.
-  -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
   <div class="container">
-    <!-- Added fw-bold for a stronger brand identity -->
     <a class="navbar-brand text-primary fw-bold" href="/home">Synapse</a>
     
-    <!-- Standard mobile toggler -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
     
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <!-- Left side nav links -->
       <div class="navbar-nav me-auto mb-2 mb-lg-0">
-        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+        <a class="nav-link active" href="/home">Home</a>
         <a class="nav-link" href="/result">Result</a>
         <a class="nav-link" href="/about">About</a>
         <a class="nav-link" href="notes">Notes</a>
         <a class="nav-link" href="pyqs">PYQS</a>
         
-        <!-- EJS logic is unchanged -->
         <% if(currentUser) {%>
           <% if(!isRegistered){ %>
             <a class="nav-link" href="/subject-registration">Register Subject</a>
           <% }else { %>
             <a class="nav-link" href="/my-subs">My Subjects</a>
-          <% }
-        } %>
-        <!-- <a href="/generate-qr" class="nav-link">Generate QR Code</a> -->
+          <% } %>
+        <% } %>
         <a href="/faculty" class="nav-link">Faculty info</a>
       </div>
       
-      <!-- Right side auth links -->
       <div class="d-flex align-items-center">
-        <!-- EJS logic is unchanged -->
         <% if (!currentUser) { %>
-          <!-- 
-            Replaced custom-styled links with Bootstrap buttons.
-            They look better and are more consistent.
-          -->
           <a class="btn btn-outline-primary btn-sm me-2" href="/login">Login</a>
-          <a class="btn btn-primary btn-sm" href="/register">Register</a>
-        
         <% } else { %>
-          <!-- 
-            Created a nicer welcome message instead of just the name.
-            Used navbar-text for proper semantic alignment.
-          -->
-          <span class="navbar-text me-3">
-            Welcome, <strong class="text-primary"><%= currentUser.username %></strong>
-          </span>
           
-          <!-- Replaced the custom-styled link with a Bootstrap button -->
+          <% if(currentUser.qrCodeString || currentUser.student_qr) { %> 
+            <button type="button" class="btn btn-light text-dark border me-3" data-bs-toggle="modal" data-bs-target="#qrModal">
+              <i class="fas fa-qrcode"></i> My Id</button>
+          <% } %>
+
+          <a href="/student/<%= currentUser.usn %>" class="text-decoration-none">
+             <span class="navbar-text me-3 border border-primary rounded-pill px-3 py-1 bg-light-hover transition-all">
+                <strong class="text-primary"><%= currentUser.name %></strong>
+             </span>
+          </a>
+          
           <a class="btn btn-outline-danger btn-sm" href="/logout">Logout</a>
         <% } %>
       </div>
     </div>
   </div>
 </nav>
+
+<% if(currentUser && (currentUser.qrCodeString || currentUser.student_qr)) { %>
+<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm"> <div class="modal-content">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title text-primary mx-auto" id="qrModalLabel">My ID Card</h5>
+        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="<%= currentUser.student_qr || currentUser.qrCodeString %>" 
+             alt="Student QR Code" 
+             class="img-fluid rounded border p-2 mb-2" 
+             style="max-width: 200px;">
+             
+        <p class="fw-bold mb-0"><%= currentUser.name %></p>
+        <p class="text-muted small"><%= currentUser.usn %></p>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>
