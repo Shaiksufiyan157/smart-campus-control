@@ -12,7 +12,7 @@ dotenv.config();
 router.get('/generate-qr',async (req,res)=>{
   const student = await Student.findOne({ usn: '3PD22CG032' });
   
-   const url = `http://smart-campus-control.vercel.app/student/3PD22CG032`;
+   const url = `https://smart-campus-control.vercel.app/student/3PD22CG032`;
    const qrCodeDataUrl = await QRCode.toDataURL(url);
       const base64Str = qrCodeDataUrl.replace(/^data:image\/png;base64,/, "");
     // res.send(`<img src="${qrCodeDataUrl}" alt="QR Code" />`);
