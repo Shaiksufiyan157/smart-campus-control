@@ -12,7 +12,10 @@ const renderAbout = (req, res) => {
     res.render("nav/about.ejs")
 }
 const FindStudent = async (req, res) => {
+
+    try{
     const { usn } = req.params;
+    console.log(usn)
     
     // 1. Find Student
     const student = await Student.findOne({ usn: usn });
@@ -33,7 +36,14 @@ const FindStudent = async (req, res) => {
     }
 // res.json({user,student,result})
     // 3. Render the view passing BOTH objects
-    res.render('student/studentInfo.ejs', { student, result });
+    res.render('student/StudentInfo.ejs', { student, result });
+}catch(e){
+    console.error("Error fetching faculty data:", e);
+        res.status(500).json({ 
+        message: 'Error fetching faculty data', 
+        error: e.message 
+        });
+}
 }
 
 const navController = {
