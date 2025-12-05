@@ -1,118 +1,51 @@
-import dotenv from 'dotenv';
-dotenv.config()
-
-import express from "express"
-import contributeController from "../controllers/contribute.controller.js"
-import multer from 'multer'
-import cloud from '../cloudinary/index.js'
-import sharp from "sharp"
-import { PDFDocument as PDFDocument } from "pdf-lib"
-import path from 'path';
-const router = express.Router()
-import fs from "fs"
-import cathAsync from '../utils/cathAsync.js';
-import ILovePDFApi from "@ilovepdf/ilovepdf-nodejs"
+import express from "express";
+import multer from "multer";
+import contributeController from "../controllers/contribute.controller.js";
 import middleware from '../middleware.js';
-// import ILovePDFFile from '@ilovepdf/ilovepdf-js/ILovePDFFile.';
+import cathAsync from '../utils/cathAsync.js';
 
-const ilovepdf = new ILovePDFApi(process.env.ILP_PUBLIC_KEY, process.env.ILP_SECRET_KEY);
+const router = express.Router();
 
-const storage=multer.memoryStorage();
+// 1. CONFIGURE MULTER (MEMORY STORAGE)
+// This stores files in RAM so the controller can access .buffer
+const storage = multer.memoryStorage();
 const upload = multer({
-     storage:storage,
-     limits: { fileSize: 10 * 1024 * 1024 }  
+    storage: storage,
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB Limit
+});
+
+// 2. HELPER: Upload Middleware with Error Handling
+// This handles the specific error if a file is too big
+const handleUpload = (fieldName, redirectPath) => (req, res, next) => {
+    upload.array(fieldName)(req, res, (err) => {
+        if (err?.code === 'LIMIT_FILE_SIZE') {
+            req.flash('error', 'File is too large (Max 10MB)');
+            return res.redirect(redirectPath);
+        }
+        if (err) {
+            req.flash('error', 'Error uploading file');
+            return res.redirect(redirectPath);
+        }
+        next();
     });
+};
 
+// 3. ROUTES
 
-
-
-// ----------------------------->
-
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "uploads/");
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname);
-//     }
-// });
-
-
-const upload2 = multer({ storage })
-
-
-
-// -------------------
+// --- PDF Render Route ---
 router.route('/addpdf')
-    .get(contributeController.renderpdf)
-    .post(upload2.single('pdf'), async (req, res) => {
+    .get(contributeController.renderpdf);
 
-        // console.log(req.file.path)
-
-        // const originalName = req.file.originalname;
-        // const filePath = `./uploads/${originalName}`;
-        // const fileBuffer = fs.readFileSync(filePath);
-        const task = await ilovepdf.newTask('compress');
-        // const file = new ILovePDFFile(fileBuffer, originalName);
-        task.start()
-            .then(() => {
-                return task.addFile('uploads/dip assignment 121.pdf');
-            })
-            .then(() => {
-                return task.process();
-            })
-            .then(() => {
-                return task.download();
-            })
-            .then((data) => {
-                console.log(data)
-                fs.writeFileSync('uploads/oomd notes test.pdf', data);
-                // filepath: c:\Users\shaik\Desktop\smart campus control\backend\src\routes\contribute.route.js
-                // fs.writeFileSync('C:\Users\shaik\Desktop\smart campus control\backend\uploads\dip assignment 121.pdf', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                console.log("hello from error")
-            })
-
-        res.send("working fine")
-        console.log("hello from no error")
-    })
-
-const compressFile = async (existingToBytes, originalname) => {
-
-    const pdfDoc = await PDFDocument.load(existingToBytes);
-    const compressedPdfBytes = await pdfDoc.save();
-    fs.writeFileSync(`./uploads/compressed/${originalname}`, compressedPdfBytes);
-}
-
-
-
-
-
-const notesUpload = (req, res, next) => {
-  upload.array('notes')(req, res, err => {
-    if (err?.code === 'LIMIT_FILE_SIZE') {
-req.flash('error','file is too large');
-return res.redirect('/addnotes')
-}
-    next();
-  });
-};
-const pyqsUpload = (req, res, next) => {
-  upload.array('pyqs')(req, res, err => {
-    if (err?.code === 'LIMIT_FILE_SIZE') {
-req.flash('error','file is too large');
-return res.redirect('/addpyqs')
-}
-    next();
-  });
-};
+// --- Notes Route ---
 router.route('/addnotes')
-    .get(middleware.isLoggedIn,contributeController.renderAddnotes)
-    .post(middleware.isLoggedIn, notesUpload, cathAsync(contributeController.Addnotes));
+    .get(middleware.isLoggedIn, contributeController.renderAddnotes)
+    // 'notes' matches <input name="notes"> in your EJS form
+    .post(middleware.isLoggedIn, handleUpload('notes', '/addnotes'), cathAsync(contributeController.Addnotes));
+
+// --- PYQs Route ---
 router.route('/addpyqs')
     .get(middleware.isLoggedIn, contributeController.renderAddpyqs)
-    .post(middleware.isLoggedIn, pyqsUpload, contributeController.Addpyqs);
+    // 'pyqs' matches <input name="pyqs"> in your EJS form
+    .post(middleware.isLoggedIn, handleUpload('pyqs', '/addpyqs'), cathAsync(contributeController.Addpyqs));
 
 export default router;
