@@ -1,6 +1,7 @@
 import Note from "../models/notes.model.js";
 import Pyq from "../models/pyqs.model.js";
 import { v2 as cloudinary } from 'cloudinary';
+import PDFDocument from "pdfkit"; // Required for stitching images
 
 // --- RENDER FUNCTIONS ---
 const renderAddnotes = (req, res) => res.render("contribution/notes.ejs");
@@ -8,16 +9,18 @@ const renderAddpyqs = (req, res) => res.render("contribution/pyq.ejs");
 const renderpdf = (req, res) => res.render('contribution/pdf.ejs');
 
 
-// --- 1. ADD NOTES (Simple Logic) ---
+// ==========================================
+// 1. ADD NOTES (Simple - PDF Only)
+// ==========================================
 const Addnotes = async (req, res) => {
     try {
         const newNote = new Note(req.body);
 
-        // File is ALREADY uploaded by the route middleware
+        // Route Middleware already uploaded the file to Cloudinary
         if (req.files && req.files.length > 0) {
             newNote.pdf = {
-                url: req.files[0].path,       // Cloudinary URL
-                filename: req.files[0].filename // Cloudinary ID
+                url: req.files[0].path,       
+                filename: req.files[0].filename 
             };
         }
 
@@ -33,25 +36,18 @@ const Addnotes = async (req, res) => {
 };
 
 
-// --- 2. ADD PYQS (Previous / Buffer Logic) ---
+// ==========================================
+// 2. ADD PYQS (Smart - PDF or Multiple Images)
+// ==========================================
 const Addpyqs = async (req, res) => {
     try {
-        // Validation
         if (!req.files || req.files.length === 0) {
-            req.flash('error', 'No file uploaded');
+            req.flash('error', 'No files uploaded');
             return res.redirect('/addpyqs');
         }
 
-        const file = req.files[0];
-
-        // Strict PDF Check
-        if (file.mimetype !== 'application/pdf') {
-            req.flash('error', 'Invalid format. Only PDF files are allowed.');
-            return res.redirect('/addpyqs');
-        }
-
-        // Manual Upload Helper
-        const uploadToCloudinary = (buffer) => {
+        // --- HELPER: Upload Function ---
+        const uploadToCloudinary = (streamOrBuffer) => {
             return new Promise((resolve, reject) => {
                 const uploadStream = cloudinary.uploader.upload_stream(
                     {
@@ -64,18 +60,51 @@ const Addpyqs = async (req, res) => {
                         else resolve(result);
                     }
                 );
-                uploadStream.end(buffer);
+                
+                // Handle both Buffer (single file) and Stream (PDFKit)
+                if (streamOrBuffer.pipe) {
+                    streamOrBuffer.pipe(uploadStream); // It's a stream (PDFKit)
+                } else {
+                    uploadStream.end(streamOrBuffer);  // It's a buffer (Single PDF)
+                }
             });
         };
 
-        // Perform Upload
-        const uploadedPdf = await uploadToCloudinary(file.buffer);
+        let uploadPromise;
+
+        // SCENARIO A: Single PDF File
+        // (If the first file is PDF, we assume it's just one PDF)
+        if (req.files[0].mimetype === 'application/pdf') {
+            uploadPromise = uploadToCloudinary(req.files[0].buffer);
+        }
+        
+        // SCENARIO B: Multiple Images -> Stitch into 1 PDF
+        else {
+            const doc = new PDFDocument({ autoFirstPage: false });
+            
+            // Start uploading the stream immediately
+            uploadPromise = uploadToCloudinary(doc);
+
+            for (const file of req.files) {
+                // Skip non-image files to prevent errors
+                if (!file.mimetype.startsWith('image/')) continue;
+
+                // Create a page for each image
+                const img = doc.openImage(file.buffer);
+                doc.addPage({ size: [img.width, img.height] });
+                doc.image(img, 0, 0);
+            }
+            doc.end(); // Finish the PDF
+        }
+
+        // Wait for upload to complete
+        const uploadedFile = await uploadPromise;
 
         // Save to DB
         const newPyq = new Pyq(req.body);
         newPyq.pdf = {
-            url: uploadedPdf.secure_url,
-            filename: uploadedPdf.public_id,
+            url: uploadedFile.secure_url,
+            filename: uploadedFile.public_id,
         };
 
         await newPyq.save();
