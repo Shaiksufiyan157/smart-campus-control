@@ -43,11 +43,11 @@ const FindStudent = async (req, res) => {
 
         if (!result) {
             req.flash('error', 'No results found for this student.');
-            return res.render('student/studentInfo.ejs', { student, result: null });
+            return res.render('student/StudentInfo.ejs', { student, result: null });
         }
 
         // 3. Render
-        res.render('student/studentInfo.ejs', { student, result });
+        res.render('student/StudentInfo.ejs', { student, result });
 
     } catch (e) {
         console.error("Error in FindStudent:", e);
